@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mainContent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_medium"
+        >
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gifList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_grid"
+            android:visibility="gone"
+            >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <include layout="@layout/content_empty"></include>
+    <include layout="@layout/content_error"></include>
+
+
+</LinearLayout>

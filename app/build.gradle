@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Android.compileSDK
+    defaultConfig {
+        applicationId Android.applicationId
+        minSdkVersion Android.minSDK
+        targetSdkVersion Android.targetSDK
+        versionCode Android.versionCode
+        versionName  Android.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Libs.kotlinStdLib
+    implementation Libs.appCompat
+    implementation Libs.coreExt
+
+
+    // Testing Dependencies
+    testImplementation TestLibs.junit
+    androidTestImplementation TestLibs.espressoCore
+    androidTestImplementation TestLibs.espressoContrib
+    implementation TestLibs.espressoIdlingResource
+    testImplementation TestLibs.archCoreTesting
+    androidTestImplementation TestLibs.testRunner
+    androidTestImplementation TestLibs.rules
+    androidTestImplementation TestLibs.truth
+    androidTestImplementation TestLibs.junitExt
+    testImplementation TestLibs.mockito
+    testImplementation TestLibs.mockHttpServer
+
+
+    //material lib
+    implementation Libs.material
+    // android libs
+    implementation Libs.recyclerview
+    implementation Libs.cardview
+    implementation Libs.constraintLayout
+    //RxJava
+    implementation Libs.rxVersion
+    implementation  Libs.rxAndroid
+    implementation Libs.rxAdapter
+    //Retrofit
+    implementation Libs.retrofit
+    //Gson
+    implementation Libs.gson
+    implementation Libs.gsonConverter
+    //okhttp logging
+    implementation Libs.loggingInterceptor
+    //dagger
+    implementation Libs.dagger
+    kapt Libs.daggerCompiler
+    // live data with view model
+    implementation Libs.viewModel
+    implementation Libs.liveData
+    //glide
+    implementation Libs.glide
+    kapt Libs.glideCompiler
+
+}

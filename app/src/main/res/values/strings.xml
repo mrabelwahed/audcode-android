@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GIF Search</string>
+    <string name="search">Search</string>
+    <string name="empty_text">It seems no data available now, try to  make a new search </string>
+    <string name="search_hint">no keyword placed</string>
+    <string name="failure_unexpected_error">Something went wrong</string>
+    <string name="failure_network_connection">No Network Connection.</string>
+    <string name="failure_server_error">Server Error</string>
+
+</resources>
