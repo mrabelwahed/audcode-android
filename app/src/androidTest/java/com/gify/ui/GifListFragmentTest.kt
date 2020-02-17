@@ -1,6 +1,5 @@
 package com.gify.ui
 
-import android.os.SystemClock
 import android.widget.EditText
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -21,7 +20,7 @@ import viewassertion.RecyclerViewItemCountAssertion
 
 
 @RunWith(AndroidJUnit4::class)
-class GifListFragmentTest  {
+class GifListFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
@@ -103,7 +102,7 @@ class GifListFragmentTest  {
                     5,
                     click()
                 )
-            );
+            )
     }
 
 
