@@ -2,7 +2,7 @@ package com.gify.util
 
 import androidx.test.espresso.idling.CountingIdlingResource
 
-object EspressoIdlingResource {
+object EspressoCountingIdlingResource {
     private const val RESOURCE = "Global"
     @JvmField
     val idlingResource = CountingIdlingResource(RESOURCE)

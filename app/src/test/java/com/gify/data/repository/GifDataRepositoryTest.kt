@@ -4,7 +4,7 @@ import com.gify.data.network.GifAPI
 import com.gify.data.network.response.GifResponse
 import com.rules.RxSchedulerRule
 import com.squareup.okhttp.mockwebserver.MockResponse
-import com.util.BaseTest
+import com.util.BaseNetwrokTest
 import io.reactivex.subscribers.TestSubscriber
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -17,7 +17,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 
-class GifDataRepositoryTest : BaseTest() {
+class GifDataRepositoryTest : BaseNetwrokTest() {
 
     @Rule
     @JvmField

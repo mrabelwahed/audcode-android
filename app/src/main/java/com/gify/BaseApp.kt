@@ -7,11 +7,11 @@ import com.gify.di.module.NetworkModule
 import com.gify.di.module.GifyUsecaseModule
 import com.gify.di.module.RepositoryModule
 
-class BaseApp : Application() {
+open class BaseApp : Application() {
      val appComponent: AppComponent by lazy { initDagger() }
 
 
-    private fun initDagger()  = DaggerAppComponent.builder()
+   open  fun initDagger()  = DaggerAppComponent.builder()
         .networkModule(NetworkModule())
         .repositoryModule(RepositoryModule())
         .gifyUsecaseModule(GifyUsecaseModule())

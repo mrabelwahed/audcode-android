@@ -22,7 +22,7 @@ import com.gify.ui.model.GifModel
 import com.gify.ui.viewmodel.GifListViewModel
 import com.gify.ui.viewmodel.ViewModelFactory
 import com.gify.ui.viewstate.ServerDataState
-import com.gify.util.EspressoIdlingResource
+import com.gify.util.EspressoCountingIdlingResource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
@@ -140,17 +140,17 @@ class GifListFragment : BaseFragment(), OnClickListener {
                     val gifItems = (it.item as ArrayList<GifModel>)
                     handleUISuccess()
                     setData(gifItems)
-                    EspressoIdlingResource.decrement()
+                    EspressoCountingIdlingResource.decrement()
                 }
                 is ServerDataState.Error -> {
                     handleUIError()
                     setError(it.failure)
-                    EspressoIdlingResource.decrement()
+                    EspressoCountingIdlingResource.decrement()
                 }
 
                 is ServerDataState.Loading -> {
                     handleUILoading()
-                    EspressoIdlingResource.increment()
+                    EspressoCountingIdlingResource.increment()
                 }
             }
 

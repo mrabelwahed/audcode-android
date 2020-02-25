@@ -12,6 +12,7 @@ android {
         versionCode Android.versionCode
         versionName  Android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -23,10 +24,18 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation Libs.kotlinStdLib
     implementation Libs.appCompat
     implementation Libs.coreExt
@@ -43,6 +52,7 @@ dependencies {
     androidTestImplementation TestLibs.truth
     androidTestImplementation TestLibs.junitExt
     testImplementation TestLibs.mockito
+    androidTestImplementation TestLibs.mockHttpServer
     testImplementation TestLibs.mockHttpServer
 
 

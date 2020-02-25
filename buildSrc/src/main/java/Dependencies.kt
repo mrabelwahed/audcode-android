@@ -13,7 +13,7 @@ object Versions {
     val RX_RETROFIT_ADAPTER = "2.6.1"
     val DAGGER_VERSION = "2.22"
     val DAGGER_COMPILER = "2.22"
-    val RETROFIT_VERSION = "2.6.1"
+    val RETROFIT_VERSION = "2.7.1"
     val GSON_VERSION = "2.8.5"
     val GSON_CONVERTER = "2.6.1"
     val OKHTTP_LOGGING_INTERCEPTOR_VERSION = "3.12.1"
