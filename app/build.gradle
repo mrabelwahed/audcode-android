@@ -11,8 +11,8 @@ android {
         targetSdkVersion Android.targetSDK
         versionCode Android.versionCode
         versionName  Android.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        //testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'com.gify.runner.MockRunner'
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -51,10 +51,17 @@ dependencies {
     androidTestImplementation TestLibs.rules
     androidTestImplementation TestLibs.truth
     androidTestImplementation TestLibs.junitExt
-    testImplementation TestLibs.mockito
+    //androidTestImplementation TestLibs.mockito
     androidTestImplementation TestLibs.mockHttpServer
     testImplementation TestLibs.mockHttpServer
 
+    kaptTest Libs.dagger
+    testImplementation Libs.dagger
+    kaptAndroidTest Libs.daggerCompiler
+
+    androidTestImplementation TestLibs.rxIdler
+    testImplementation TestLibs.mockito
+    androidTestImplementation TestLibs.mockitoAndroid
 
     //material lib
     implementation Libs.material

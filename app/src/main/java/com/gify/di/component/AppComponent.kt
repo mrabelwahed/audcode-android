@@ -1,5 +1,6 @@
 package com.gify.di.component
 
+import com.gify.BaseApp
 import com.gify.di.module.*
 import com.gify.di.scope.AppScope
 import com.gify.di.subcomponent.GifyListComponent
@@ -15,4 +16,5 @@ import dagger.Component
 )
 interface AppComponent {
     fun newGifLisComponent(): GifyListComponent
+    fun inject(app:BaseApp)
 }

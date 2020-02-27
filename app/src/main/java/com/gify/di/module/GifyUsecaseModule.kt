@@ -7,9 +7,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class GifyUsecaseModule {
+open class GifyUsecaseModule {
     @AppScope
     @Provides
-    fun provideGifListCase(repository : GifDataRepository) =
+    open fun provideGifListCase(repository : GifDataRepository) =
         GetGifListUseCase(repository)
 }

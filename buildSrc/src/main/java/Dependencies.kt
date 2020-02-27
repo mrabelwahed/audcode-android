@@ -4,11 +4,11 @@ import Versions.MOCK_HTTP_SERVER
 object Versions {
     val KOTLIN = "1.3.20"
     val COMPILE_SDK = 28
-    val MIN_SDK_VERSION = 15
+    val MIN_SDK_VERSION = 16
     val TARGET_SDK_VERSION = 28
     val VERSION_CODE = 1
     val VERSION_NAME = "1.0"
-    val RXJAVA_VERSION = "2.2.12"
+    val RXJAVA_VERSION = "2.2.13"
     val RX_ANDROID = "2.1.1"
     val RX_RETROFIT_ADAPTER = "2.6.1"
     val DAGGER_VERSION = "2.22"
@@ -32,8 +32,9 @@ object Versions {
     val TRUTH_VER = "1.1.0"
     val JUNIT_EXT_VER = "1.1.0"
     val MATERIAL_VERSION ="1.0.0"
-    val MOCKITO ="2.13.0"
+    val MOCKITO ="3.3.1"
     val MOCK_HTTP_SERVER ="2.7.5"
+    val RX_IDLER = "0.10.0"
 }
 
 object BuildPlugins {
@@ -79,10 +80,12 @@ object TestLibs {
     val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.ESPRESSO_VERSION}"
     val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.ESPRESSO_VERSION}"
     val archCoreTesting = "androidx.arch.core:core-testing:${Versions.ARCH_CORE_TESTING_VER}"
-    val testRunner = "androidx.test:runner:${Versions.RULES_VER}"
+    val testRunner = "com.android.support.test:runner:${Versions.TEST_RUNNER_VER}"
     val rules = "androidx.test:rules:${Versions.RULES_VER}"
     val truth = "androidx.test.ext:truth:${Versions.TRUTH_VER}"
     val junitExt = "androidx.test.ext:junit:${Versions.JUNIT_EXT_VER}"
-    val mockito =  "org.mockito:mockito-inline:${Versions.MOCKITO}"
+    val mockito =  "org.mockito:mockito-core:${Versions.MOCKITO}"
+    val mockitoAndroid="org.mockito:mockito-android:${Versions.MOCKITO}"
     val mockHttpServer = "com.squareup.okhttp:mockwebserver:$MOCK_HTTP_SERVER"
+    val rxIdler ="com.squareup.rx.idler:rx2-idler:${Versions.RX_IDLER}"
 }

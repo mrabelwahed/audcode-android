@@ -15,8 +15,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+
 @Module
-open class NetworkModule {
+ open class NetworkModule(var baseUrl:String) {
     @AppScope
     @Provides
     fun provideHttpLogging(): HttpLoggingInterceptor {
@@ -51,6 +52,6 @@ open class NetworkModule {
 
     @AppScope
     @Provides
-    open fun provideFeedService(builder: Retrofit.Builder) =
-        builder.baseUrl(BASE_URL).build().create(GifAPI::class.java)
+     fun provideFeedService(builder: Retrofit.Builder) =
+        builder.baseUrl(baseUrl).build().create(GifAPI::class.java)
 }

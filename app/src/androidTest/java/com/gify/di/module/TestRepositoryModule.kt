@@ -1,15 +1,13 @@
 package com.gify.di.module
 
-import com.gify.di.scope.AppScope
 import com.gify.data.network.GifAPI
 import com.gify.data.repository.GifDataRepository
 import dagger.Module
 import dagger.Provides
+import org.mockito.Mockito.mock
 
 @Module
-open class RepositoryModule {
-    @AppScope
+class TestRepositoryModule  :RepositoryModule(){
     @Provides
-   open fun provideGifRepository(api: GifAPI) =
-        GifDataRepository(api)
+     fun provideRepository(api: GifAPI) = GifDataRepository(mock(GifAPI::class.java))
 }

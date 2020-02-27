@@ -1,3 +1,5 @@
+package com.gify;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
