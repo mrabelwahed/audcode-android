@@ -13,6 +13,7 @@ android {
         versionName  Android.versionName
         testInstrumentationRunner 'com.gify.runner.MockRunner'
         multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -89,5 +90,12 @@ dependencies {
     //glide
     implementation Libs.glide
     kapt Libs.glideCompiler
+
+   //navigation
+    implementation Libs.navigationUI
+    implementation Libs.navigationFragment
+
+
+
 
 }

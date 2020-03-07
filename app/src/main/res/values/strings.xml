@@ -6,5 +6,11 @@
     <string name="failure_unexpected_error">Something went wrong</string>
     <string name="failure_network_connection">No Network Connection.</string>
     <string name="failure_server_error">Server Error</string>
+    <string name="signup">Sign up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="password">password</string>
+    <string name="email">email</string>
+    <string name="welcome_back">Welcome \n back</string>
+    <string name="register_account">Create \n account</string>
 
 </resources>

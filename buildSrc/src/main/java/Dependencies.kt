@@ -1,5 +1,6 @@
 import Versions.GLIDE_VERSION
 import Versions.MOCK_HTTP_SERVER
+import Versions.NAV_VERSION
 
 object Versions {
     val KOTLIN = "1.3.20"
@@ -35,6 +36,7 @@ object Versions {
     val MOCKITO ="3.3.1"
     val MOCK_HTTP_SERVER ="2.7.5"
     val RX_IDLER = "0.10.0"
+    val NAV_VERSION = "2.3.0-alpha03"
 }
 
 object BuildPlugins {
@@ -72,6 +74,9 @@ object Libs {
     val glideCompiler =  "com.github.bumptech.glide:compiler:${Versions.GLIDE_VERSION}"
     val appCompat = "androidx.appcompat:appcompat:${Versions.APP_COMPAT_VERSION}"
     val coreExt = "androidx.core:core-ktx:${Versions.CORE_KTX}"
+    // Java language implementation
+    val navigationFragment =  "androidx.navigation:navigation-fragment:$NAV_VERSION"
+    val navigationUI= "androidx.navigation:navigation-ui:$NAV_VERSION"
 }
 
 object TestLibs {
