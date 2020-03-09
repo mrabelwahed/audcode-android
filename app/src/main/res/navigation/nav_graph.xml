@@ -8,13 +8,15 @@
     <fragment
             android:id="@+id/splashFragment"
             tools:layout="@layout/fragment_splash"
-            android:name="com.gify.ui.splash.SplashFragment"
+            android:name="com.audcode.ui.splash.SplashFragment"
             >
         <action android:id="@+id/action_splashFragment_to_LoginFragment"
                 app:destination="@id/loginFragment"
                 app:popUpTo="@id/splashFragment"
                 app:popUpToInclusive="true"
                 />
+
+
     </fragment>
 
     <fragment
@@ -25,6 +27,12 @@
         <action android:id="@+id/action_loginFragment_to_RegisterFragment"
                 app:destination="@id/registerFragment"
                 />
+
+        <action android:id="@+id/action_loginFragment_to_homeFragment"
+                app:destination="@id/homeFragment"
+                app:popUpTo="@id/splashFragment"
+                app:popUpToInclusive="true"
+                />
     </fragment>
 
 
@@ -34,8 +42,18 @@
             android:name="com.ramadan.login.RegisterFragment"
             tools:layout="@layout/fragment_register"
             >
-        <action android:id="@+id/action_registerFragment_to_LoginFragment"
+        <action
+                android:id="@+id/action_registerFragment_to_LoginFragment"
+                app:destination="@id/loginFragment"
                 />
+    </fragment>
+
+    <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.audcode.ui.home.HomeFragment"
+            tools:layout="@layout/fragment_home"
+            >
+
     </fragment>
 
 </navigation>

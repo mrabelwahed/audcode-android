@@ -11,7 +11,7 @@ android {
         targetSdkVersion Android.targetSDK
         versionCode Android.versionCode
         versionName  Android.versionName
-        testInstrumentationRunner 'com.gify.runner.MockRunner'
+        testInstrumentationRunner 'com.audcode.runner.MockRunner'
         multiDexEnabled true
 
     }
