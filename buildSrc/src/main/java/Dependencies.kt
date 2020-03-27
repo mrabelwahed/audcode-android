@@ -1,4 +1,6 @@
+import Versions.EXO_PLAYER
 import Versions.GLIDE_VERSION
+import Versions.LIFE_CYCLE_VERSION
 import Versions.MOCK_HTTP_SERVER
 import Versions.NAV_VERSION
 
@@ -37,6 +39,7 @@ object Versions {
     val MOCK_HTTP_SERVER ="2.7.5"
     val RX_IDLER = "0.10.0"
     val NAV_VERSION = "2.3.0-alpha03"
+    val EXO_PLAYER ="1.0.0"
 }
 
 object BuildPlugins {
@@ -77,6 +80,11 @@ object Libs {
     // Java language implementation
     val navigationFragment =  "androidx.navigation:navigation-fragment:$NAV_VERSION"
     val navigationUI= "androidx.navigation:navigation-ui:$NAV_VERSION"
+    val lifecycleExt =  "androidx.lifecycle:lifecycle-extensions:$LIFE_CYCLE_VERSION"
+    // Audio
+    val exoCore = "com.google.android.exoplayer:exoplayer-core:$EXO_PLAYER"
+    val exoUI =  "com.google.android.exoplayer:exoplayer-ui:$EXO_PLAYER"
+    val exoMedia =  "com.google.android.exoplayer:extension-mediasession:$EXO_PLAYER"
 }
 
 object TestLibs {

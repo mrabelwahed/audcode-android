@@ -2,9 +2,9 @@ package com.audcode.di.module
 
 import com.audcode.AppConst.TIMEOUT_REQUEST
 import com.audcode.data.network.AuthInterceptor
+import com.audcode.data.network.EpisodeApi
 
 import com.audcode.di.scope.AppScope
-import com.audcode.data.network.GifAPI
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit
     @Provides
     fun provideOkhttpClient(interceptor: HttpLoggingInterceptor , authInterceptor: AuthInterceptor): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
+            //.addInterceptor(authInterceptor)
             .addInterceptor(interceptor)
             .connectTimeout(TIMEOUT_REQUEST, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_REQUEST, TimeUnit.SECONDS)
@@ -52,5 +52,5 @@ import java.util.concurrent.TimeUnit
     @AppScope
     @Provides
      fun provideFeedService(builder: Retrofit.Builder) =
-        builder.baseUrl(baseUrl).build().create(GifAPI::class.java)
+        builder.baseUrl(baseUrl).build().create(EpisodeApi::class.java)
 }

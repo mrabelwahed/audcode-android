@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion Android.compileSDK
@@ -87,6 +88,7 @@ dependencies {
     // live data with view model
     implementation Libs.viewModel
     implementation Libs.liveData
+    implementation Libs.lifecycleExt
     //glide
     implementation Libs.glide
     kapt Libs.glideCompiler
@@ -94,8 +96,15 @@ dependencies {
    //navigation
     implementation Libs.navigationUI
     implementation Libs.navigationFragment
+    //EXO Player
+//    implementation Libs.exoCore
+//    implementation Libs.exoUI
+//    implementation Libs.exoMedia
 
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.4'
 
-
-
+    // Custom Tabs
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

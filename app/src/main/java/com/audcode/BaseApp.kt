@@ -5,7 +5,7 @@ import com.audcode.AppConst.BASE_URL
 import com.audcode.di.component.AppComponent
 import com.audcode.di.component.DaggerAppComponent
 import com.audcode.di.module.NetworkModule
-import com.audcode.di.module.GifyUsecaseModule
+import com.audcode.di.module.EpisodeUsecase
 import com.audcode.di.module.RepositoryModule
 
 open class BaseApp : Application() {
@@ -16,7 +16,7 @@ open class BaseApp : Application() {
    open  fun createAppComponent()  = DaggerAppComponent.builder()
         .networkModule(NetworkModule(BASE_URL))
         .repositoryModule(RepositoryModule())
-        .gifyUsecaseModule(GifyUsecaseModule())
+        .episodeUsecase(EpisodeUsecase())
         .build()
 
      override fun onCreate() {

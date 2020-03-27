@@ -6,4 +6,6 @@
     <color name="grey">#D3D3D3</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="color_destructive">@color/black</color>
+    <color name="placeholder_bg">#dddddd</color>
 </resources>

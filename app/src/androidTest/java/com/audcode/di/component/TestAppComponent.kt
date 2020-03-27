@@ -1,7 +1,6 @@
 package com.audcode.di.component
 
 import com.audcode.di.module.*
-import com.audcode.ui.GifListFragmentTest
 import dagger.Component
 import com.audcode.di.scope.AppScope
 
@@ -10,9 +9,9 @@ import com.audcode.di.scope.AppScope
     modules = [
         NetworkModule::class,
         RepositoryModule::class,
-        GifyUsecaseModule::class
+        EpisodeUsecase::class
     ]
 )
 interface TestAppComponent : AppComponent {
-    fun inject(fragment: GifListFragmentTest)
+    //fun inject(fragment: GifListFragmentTest)
 }

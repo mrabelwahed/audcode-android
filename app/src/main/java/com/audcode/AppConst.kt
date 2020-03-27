@@ -3,7 +3,7 @@ package com.audcode
 
 
 object AppConst{
-    const val BASE_URL = "https://api.giphy.com/"
+    const val BASE_URL = "https://www.audcode.com"
 
     const val TIMEOUT_REQUEST =30L
 

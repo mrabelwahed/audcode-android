@@ -13,10 +13,15 @@
     <string name="welcome_back">Welcome \n back</string>
     <string name="register_account">Create \n account</string>
     <string name="listen_to_tech"> Listen To \nTech Geeks</string>
-    <string name="search_audcodes">Search Audcodes</string>
+    <string name="search_audcodes">Search for Summaries</string>
     <string name="subscribe">Subscribe</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_library">Library</string>
     <string name="menu_home">home</string>
+    <string name="play">play</string>
+    <string name="stop">stop</string>
+    <string name="view_episode_link_failed">Cannot open this link at the moment, please try again later</string>
+    <string name="share">Share</string>
+    <string name="close">close</string>
 
 </resources>

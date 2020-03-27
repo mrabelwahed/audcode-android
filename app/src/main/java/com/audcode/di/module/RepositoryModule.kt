@@ -1,8 +1,8 @@
 package com.audcode.di.module
 
+import com.audcode.data.network.EpisodeApi
+import com.audcode.data.repository.EpisodeDataRepository
 import com.audcode.di.scope.AppScope
-import com.audcode.data.network.GifAPI
-import com.audcode.data.repository.GifDataRepository
 import dagger.Module
 import dagger.Provides
 
@@ -10,6 +10,6 @@ import dagger.Provides
 open class RepositoryModule {
     @AppScope
     @Provides
-   open fun provideGifRepository(api: GifAPI) =
-        GifDataRepository(api)
+    open fun provideGifRepository(api: EpisodeApi) =
+        EpisodeDataRepository(api)
 }

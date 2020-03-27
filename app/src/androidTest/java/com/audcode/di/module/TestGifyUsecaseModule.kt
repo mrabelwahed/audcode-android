@@ -1,15 +1,15 @@
 package com.audcode.di.module
 
-import com.audcode.data.repository.GifDataRepository
-import com.audcode.domain.interactor.GetGifListUseCase
+import com.audcode.data.repository.EpisodeDataRepository
+import com.audcode.domain.interactor.GetEpisodesUC
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito.mock
 
 @Module
-class TestGifyUsecaseModule : GifyUsecaseModule() {
+class TestGifyUsecaseModule : EpisodeUsecase() {
     @Provides
-     fun provideUseCase(repository: GifDataRepository) =
-        GetGifListUseCase(mock(GifDataRepository::class.java))
+     fun provideUseCase(repository: EpisodeDataRepository) =
+        GetEpisodesUC(mock(EpisodeDataRepository::class.java))
 
 }

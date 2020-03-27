@@ -21,7 +21,7 @@ class HomeAdapter @Inject constructor() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_episode, null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent,false)
         return EpisodeViewHolder(view)
     }
 
@@ -32,8 +32,8 @@ class HomeAdapter @Inject constructor() :
 
             holder.author.text = episodes[position].author
             holder.title.text = episodes[position].name
-            holder.stack.text = episodes[position].mainStack
-            holder.ratingCount.text = episodes[position].ratingCount.toString()
+          // holder.stack.text = episodes[position].mainStack
+           // holder.ratingCount.text = episodes[position].ratingCount.toString()
             Glide.with(holder.itemView.context).load(if (position%2 ==0) (R.drawable.rxjava) else (R.drawable.kot)).into(holder.image)
             holder.itemView.setOnClickListener {
                 listener.onClick(position, it)
@@ -47,18 +47,18 @@ class HomeAdapter @Inject constructor() :
     class EpisodeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val author: TextView = view.episodeAuthor
         val title: TextView = view.episodeTitle
-        val stack: TextView = view.episodeMainStack
+        //val stack: TextView = view.episodeMainStack
         val image:ImageView = view.episodeImage
-        val ratingCount:TextView = view.ratingCount
+        //val ratingCount:TextView = view.ratingCount
     }
 
 
-    fun addGifs(list: ArrayList<EpisodeModel>) {
+    fun addEpisodes(list: ArrayList<EpisodeModel>) {
         episodes.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun clearAllGIF() {
+    fun clearAll() {
         episodes.clear()
         notifyDataSetChanged()
     }
