@@ -11,17 +11,16 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
-import com.audcode.ui.BaseFragment
-import com.audcode.ui.EpisodeHtmlUtils
-import com.audcode.ui.app
+import com.audcode.ui.*
 import com.audcode.ui.episode_details.EpisodeDetailsFragmentArgs.fromBundle
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
-import com.audcode.ui.openUrl
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_episode_details.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class EpisodeDetailsFragment : BaseFragment() {
@@ -45,9 +44,20 @@ class EpisodeDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         episodeTitleTextView.text = selectedEpisode.name
+        dateTextView.text = formatDate(selectedEpisode.createdAt)
         renderTags(selectedEpisode)
         renderContent(selectedEpisode)
     }
+
+    fun formatDate(dateStr:String):String{
+        val DATE_FORMAT = "dd MMMM yyyy"
+        val format1 = SimpleDateFormat("yyyy-MM-dd")
+        val format2 = SimpleDateFormat(DATE_FORMAT)
+        val date: Date = format1.parse(dateStr)
+        return  format2.format(date)
+
+    }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
