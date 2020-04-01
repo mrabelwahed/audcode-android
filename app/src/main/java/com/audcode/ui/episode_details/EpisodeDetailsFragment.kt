@@ -2,6 +2,7 @@ package com.audcode.ui.episode_details
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ImageButton
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
 import com.audcode.ui.*
@@ -16,9 +18,16 @@ import com.audcode.ui.episode_details.EpisodeDetailsFragmentArgs.fromBundle
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.viewmodel.ViewModelFactory
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_episode_details.*
+import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -29,6 +38,10 @@ class EpisodeDetailsFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     val selectedEpisode: EpisodeModel by lazy {fromBundle(arguments!!).selectedEpisode }
+    private lateinit var simpleExoPlayer: SimpleExoPlayer
+    private lateinit var mediaSource: MediaSource
+    private lateinit var dataSourceFactory: DefaultDataSourceFactory
+    private var isEpisodePlaying = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +58,38 @@ class EpisodeDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
+        initPlayer()
         renderTags(selectedEpisode)
         renderContent(selectedEpisode)
+
+        with(simpleExoPlayer){
+            prepare(mediaSource)
+            playButton.setOnClickListener {
+                if (isEpisodePlaying){
+                    playWhenReady = false
+                    isEpisodePlaying =false
+                    playButton.setImageResource(R.drawable.vd_play_arrow)
+                    bottomPlayer.visibility = View.VISIBLE
+                    bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setImageResource(R.drawable.ic_play_arrow_24px)
+                }else{
+                    playWhenReady = true
+                    isEpisodePlaying =true
+                    playButton.setImageResource(R.drawable.ic_pause_24px)
+                    bottomPlayer.visibility = View.VISIBLE
+                    bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setImageResource(R.drawable.ic_pause_32px)
+                }
+            }
+
+
+        }
+    }
+
+    private fun initPlayer() {
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(activity)
+
+        dataSourceFactory = DefaultDataSourceFactory(activity, Util.getUserAgent(activity, "audcode"))
+
+        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse("https://audcode-space.fra1.digitaloceanspaces.com/eee.m4a"))
     }
 
     fun formatDate(dateStr:String):String{
@@ -136,6 +179,13 @@ class EpisodeDetailsFragment : BaseFragment() {
         R.string.view_episode_link_failed,
         Snackbar.LENGTH_SHORT
     ).show()
+
+
+//    override fun onDestroy() {
+//        simpleExoPlayer.playWhenReady = false
+//        isEpisodePlaying = false
+//        super.onDestroy()
+//    }
 
 
 }

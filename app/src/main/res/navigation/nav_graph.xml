@@ -34,12 +34,13 @@
     <fragment
             android:id="@+id/EpisodeDetailsFragment"
             android:name="com.audcode.ui.episode_details.EpisodeDetailsFragment"
-            tools:layout="@layout/fragment_episode_details">
+            tools:layout="@layout/fragment_episode_details"
+            >
         <argument
                 android:name="selectedEpisode"
                 app:argType="com.audcode.ui.home.model.EpisodeModel"
-
                 />
+
 
     </fragment>
 

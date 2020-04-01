@@ -15,11 +15,15 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
 
-    <View
-            android:id="@+id/collapsedPlayerOverlayPlaceHolderView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/player_overlay_placeholder_height"
-            android:layout_gravity="bottom"
-            android:visibility="gone" />
+<!--    <View-->
+<!--            android:id="@+id/collapsedPlayerOverlayPlaceHolderView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/player_overlay_placeholder_height"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:visibility="gone" />-->
+
+    <include
+
+            layout="@layout/view_bottom_player" />
 
 </LinearLayout>

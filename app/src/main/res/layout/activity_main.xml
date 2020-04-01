@@ -23,11 +23,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <include layout="@layout/content_main" />
+        <include
+                layout="@layout/content_main" />
 
-        <include layout="@layout/view_bottom_player" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"

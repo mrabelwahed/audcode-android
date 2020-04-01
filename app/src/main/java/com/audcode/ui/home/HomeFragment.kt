@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.util.concurrent.TimeUnit
@@ -71,7 +72,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
 
     private fun initUI() {
         bottomNavigation.visibility = View.VISIBLE
-        bottomPlayerView.visibility = View.VISIBLE
+        bottomPlayer.visibility = View.GONE
         setupView()
         setupLoadMoreListener()
         observeEpisodes()
