@@ -4,26 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.audcode.R
 import com.audcode.data.exceptions.Failure
 import com.audcode.ui.*
 import com.audcode.ui.decoration.SpacesItemDecoration
+import com.audcode.ui.episode_details.EpisodeDetailsFragment
 import com.audcode.ui.home.model.EpisodeModel
+import com.audcode.ui.splash.MainActivity
+import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.audcode.ui.viewstate.ServerDataState
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.util.concurrent.TimeUnit
@@ -39,27 +38,28 @@ class HomeFragment : BaseFragment(), OnClickListener {
     private val VISIBLE_THRESHOLD = 1
     private var newQueryIsFired = false
     @Inject
-    lateinit var homeAdapter : HomeAdapter
+    lateinit var homeAdapter: HomeAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private  var isFirstLaunch :Boolean = true
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initUI()
-        homeVM.setNewQuery(null)
-        homeVM.loadNextPage()
+
 
         RxTextView.textChanges(searchInput)
-            .filter{text -> text.length >= 3 || text.isEmpty() }
-            .debounce (150,TimeUnit.MILLISECONDS)
+            .filter { text -> text.length >= 3 || text.isEmpty() }
+            .debounce(150, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{
-                if (it.isEmpty()){
+            .subscribe {
+                if (it.isEmpty()) {
                     homeVM.setNewQuery(null)
                     homeVM.loadNextPage()
-                }else{
+                } else {
                     homeVM.setNewQuery(it.toString())
                     homeVM.loadNextPage()
                 }
@@ -71,11 +71,27 @@ class HomeFragment : BaseFragment(), OnClickListener {
     }
 
     private fun initUI() {
-        bottomNavigation.visibility = View.VISIBLE
-        bottomPlayer.visibility = View.GONE
         setupView()
         setupLoadMoreListener()
         observeEpisodes()
+        observeLastPlayingEpisode()
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).showLastPlayedEpisode()
+    }
+
+
+
+    private fun observeLastPlayingEpisode() {
+        homeVM.lastPlayedEpisode.observe(viewLifecycleOwner, Observer {
+            (activity as MainActivity).playingEpisode = it
+            (activity as MainActivity).setLastPlayedEpisode()
+            (activity as MainActivity).showLastPlayedEpisode()
+        })
     }
 
     private fun setupView() {
@@ -89,7 +105,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
     }
 
     private fun setData(episodes: ArrayList<EpisodeModel>) {
-         homeAdapter.addEpisodes(episodes)
+        homeAdapter.addEpisodes(episodes)
     }
 
     private fun observeEpisodes() {
@@ -98,9 +114,9 @@ class HomeFragment : BaseFragment(), OnClickListener {
                 is ServerDataState.Success<*> -> {
                     val episodes = (it.item as ArrayList<EpisodeModel>)
                     handleUISuccess()
-                    if (episodes.size == 0 && homeAdapter.episodes.size==0)
+                    if (episodes.size == 0 && homeAdapter.episodes.size == 0)
                         emptyView.visibility = View.VISIBLE
-                    else{
+                    else {
                         setData(episodes)
                     }
                 }
@@ -194,12 +210,24 @@ class HomeFragment : BaseFragment(), OnClickListener {
         super.onAttach(context)
         app.appComponent.newHomeComponent().inject(this)
         homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
+        isFirstLaunch = (activity as MainActivity).isFirstLaunch
+        bottomNavigation.visibility = View.VISIBLE
     }
 
     override fun onClick(position: Int, view: View) {
-        val direction = HomeFragmentDirections.actionHomeFragmentToEpisodeDetailsFragment(homeAdapter.episodes[position])
-        NavHostFragment.findNavController(this).navigate(direction)
+        isFirstLaunch = false
+        val bundle = Bundle()
+        bundle.putParcelable(SELECTED_EPISODE, homeAdapter.episodes[position])
+        val episodeDetailsFragment = EpisodeDetailsFragment()
+        episodeDetailsFragment.arguments = bundle
+        (activity as MainActivity).supportFragmentManager.beginTransaction().replace(
+            R.id.mainNavHostFragment,
+            episodeDetailsFragment
+        ).addToBackStack("null").commit()
 
     }
+
+
+
 
 }

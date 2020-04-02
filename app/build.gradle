@@ -93,9 +93,7 @@ dependencies {
     implementation Libs.glide
     kapt Libs.glideCompiler
 
-   //navigation
-    implementation Libs.navigationUI
-    implementation Libs.navigationFragment
+
     //EXO Player
 //    implementation Libs.exoCore
 //    implementation Libs.exoUI

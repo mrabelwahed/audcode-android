@@ -11,9 +11,9 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+
 import com.audcode.BaseApp
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,8 +29,7 @@ fun Context.isServiceRunning(serviceClassName: String): Boolean {
         ?: false
 }
 
-fun Fragment.findNavController(): NavController =
-    NavHostFragment.findNavController(this)
+
 
 fun Context.dpToPx(valueInDp: Float): Float {
     val metrics = resources.displayMetrics
@@ -59,7 +58,7 @@ val Fragment.toolBar: Toolbar
 val Fragment.bottomNavigation: BottomNavigationView
     get() = (activity as AppCompatActivity)?.bottomNavigationView
 
-val Fragment.bottomPlayer :RelativeLayout
+val Fragment.bottomPlayer :ConstraintLayout
     get() = (activity as AppCompatActivity)?.lastPlayedLayout
 
 fun Fragment.openUrl(url: String): Boolean {
@@ -85,6 +84,3 @@ fun Fragment.openUrl(url: String): Boolean {
     }
 }
 
-
-//fun NavController.setupActionBar(activity: AppCompatActivity, appBarConfig: AppBarConfiguration) =
-//        activity.setupActionBarWithNavController(this, appBarConfig)

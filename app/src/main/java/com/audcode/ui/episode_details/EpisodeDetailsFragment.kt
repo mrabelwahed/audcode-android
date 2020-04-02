@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -11,12 +12,14 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
 import com.audcode.ui.*
-import com.audcode.ui.episode_details.EpisodeDetailsFragmentArgs.fromBundle
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
+import com.audcode.ui.splash.MainActivity
+import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -37,11 +40,14 @@ class EpisodeDetailsFragment : BaseFragment() {
     private lateinit var homeVM: HomeVM
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    val selectedEpisode: EpisodeModel by lazy {fromBundle(arguments!!).selectedEpisode }
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private lateinit var mediaSource: MediaSource
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
     private var isEpisodePlaying = false
+
+    val selectedEpisode :EpisodeModel by lazy {
+        arguments?.getParcelable(SELECTED_EPISODE) as EpisodeModel
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +62,14 @@ class EpisodeDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+       // selectedEpisode =   arguments?.getParcelable(SELECTED_EPISODE) as EpisodeModel
         episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
         initPlayer()
         renderTags(selectedEpisode)
         renderContent(selectedEpisode)
+        observeLastPlayingEpisode()
+
 
         with(simpleExoPlayer){
             prepare(mediaSource)
@@ -77,11 +86,41 @@ class EpisodeDetailsFragment : BaseFragment() {
                     playButton.setImageResource(R.drawable.ic_pause_24px)
                     bottomPlayer.visibility = View.VISIBLE
                     bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setImageResource(R.drawable.ic_pause_32px)
+                    homeVM.setLastPlayedEpisode(selectedEpisode)
+                }
+            }
+
+            bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setOnClickListener {
+                if (isEpisodePlaying){
+                    playWhenReady = false
+                    isEpisodePlaying =false
+                    playButton.setImageResource(R.drawable.vd_play_arrow)
+                    bottomPlayer.visibility = View.VISIBLE
+                    bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setImageResource(R.drawable.ic_play_arrow_24px)
+                }else{
+                    playWhenReady = true
+                    isEpisodePlaying =true
+                    playButton.setImageResource(R.drawable.ic_pause_24px)
+                    bottomPlayer.visibility = View.VISIBLE
+                    bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton).setImageResource(R.drawable.ic_pause_32px)
                 }
             }
 
 
+
         }
+    }
+
+
+
+
+
+
+    private fun observeLastPlayingEpisode() {
+      homeVM.lastPlayedEpisode.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+          (activity as MainActivity).playingEpisode = it
+          (activity as MainActivity). showLastPlayedEpisode()
+      })
     }
 
     private fun initPlayer() {

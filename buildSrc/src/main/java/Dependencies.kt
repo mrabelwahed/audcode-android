@@ -78,8 +78,8 @@ object Libs {
     val appCompat = "androidx.appcompat:appcompat:${Versions.APP_COMPAT_VERSION}"
     val coreExt = "androidx.core:core-ktx:${Versions.CORE_KTX}"
     // Java language implementation
-    val navigationFragment =  "androidx.navigation:navigation-fragment:$NAV_VERSION"
-    val navigationUI= "androidx.navigation:navigation-ui:$NAV_VERSION"
+
+
     val lifecycleExt =  "androidx.lifecycle:lifecycle-extensions:$LIFE_CYCLE_VERSION"
     // Audio
     val exoCore = "com.google.android.exoplayer:exoplayer-core:$EXO_PLAYER"

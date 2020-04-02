@@ -1,5 +1,6 @@
 package com.audcode.ui.home
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.audcode.data.exceptions.Failure
@@ -18,13 +19,13 @@ import javax.inject.Inject
 class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     BaseViewModel() {
     val viewState = MutableLiveData<ServerDataState>()
+    val lastPlayedEpisode = MutableLiveData<EpisodeModel>()
     val episodeLiveData: LiveData<ServerDataState>
         get() = viewState
 
-
-
     private var lastQuery:String? = null
     private var lastOffset = 0L
+
 
     private fun setFailure(throwable: Throwable): ServerDataState {
         return when (throwable) {
@@ -50,12 +51,23 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     }
 
 
-
     fun setNewQuery(query: String?){
         this.lastQuery = query
         this.lastOffset =0L
     }
 
+    fun setLastPlayedEpisode(episode: EpisodeModel){
+       lastPlayedEpisode.value = episode
+    }
 
+
+
+   fun play(episode:EpisodeModel){
+     //lastPlayedEpisode.isPlaying = true
+   }
+
+    fun pasue(episode:EpisodeModel){
+        //lastPlayedEpisode.isPlaying = false
+    }
 
 }

@@ -112,7 +112,7 @@
                             android:ellipsize="end"
                             android:maxWidth="64dp"
                             android:maxLines="1"
-                            app:icon="@drawable/vd_favorite_border"
+                            app:icon="@drawable/vd_thumb_up_outline"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tagsHorizontalScrollView"

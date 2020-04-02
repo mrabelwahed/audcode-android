@@ -2,11 +2,12 @@ package com.audcode.ui.splash
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.NavHostFragment
 import com.audcode.R
 import com.audcode.ui.BaseFragment
 import com.audcode.ui.bottomNavigation
 import com.audcode.ui.bottomPlayer
+import com.audcode.ui.home.HomeFragment
+import com.audcode.ui.splash.MainActivity.Companion.FIRST_LAUNCH
 import com.audcode.ui.toolBar
 import kotlinx.android.synthetic.main.view_bottom_player.*
 
@@ -19,8 +20,9 @@ class SplashFragment : BaseFragment() {
         bottomPlayer.visibility = View.GONE
         android.os.Handler().postDelayed(
             Runnable {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_splashFragment_to_homeFragment)
+                (activity as MainActivity).
+                    supportFragmentManager.beginTransaction().replace(R.id.mainNavHostFragment,HomeFragment())
+                    .commit()
             }
             , 1000
         )
