@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -41,16 +39,12 @@ class HomeFragment : BaseFragment(), OnClickListener {
     lateinit var homeAdapter: HomeAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private  var isFirstLaunch :Boolean = true
+    private var isFirstLaunch: Boolean = true
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         initUI()
-
-
         RxTextView.textChanges(searchInput)
             .filter { text -> text.length >= 3 || text.isEmpty() }
             .debounce(150, TimeUnit.MILLISECONDS)
@@ -68,6 +62,8 @@ class HomeFragment : BaseFragment(), OnClickListener {
                 shimmerView.visibility = View.VISIBLE
                 shimmerView.startShimmer()
             }
+
+
     }
 
     private fun initUI() {
@@ -75,22 +71,16 @@ class HomeFragment : BaseFragment(), OnClickListener {
         setupLoadMoreListener()
         observeEpisodes()
         observeLastPlayingEpisode()
-
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).showLastPlayedEpisode()
-    }
 
 
 
     private fun observeLastPlayingEpisode() {
-        homeVM.lastPlayedEpisode.observe(viewLifecycleOwner, Observer {
-            (activity as MainActivity).playingEpisode = it
-            (activity as MainActivity).setLastPlayedEpisode()
-            (activity as MainActivity).showLastPlayedEpisode()
+        homeVM.lastLiveEpisode.observe(viewLifecycleOwner, Observer {
+            holderActivity.playingEpisode = it
+            holderActivity.setLastPlayedEpisode(it)
+            holderActivity.showLastPlayedEpisode()
         })
     }
 
@@ -210,7 +200,6 @@ class HomeFragment : BaseFragment(), OnClickListener {
         super.onAttach(context)
         app.appComponent.newHomeComponent().inject(this)
         homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
-        isFirstLaunch = (activity as MainActivity).isFirstLaunch
         bottomNavigation.visibility = View.VISIBLE
     }
 
@@ -226,8 +215,6 @@ class HomeFragment : BaseFragment(), OnClickListener {
         ).addToBackStack("null").commit()
 
     }
-
-
 
 
 }

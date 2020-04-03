@@ -24,5 +24,7 @@
     <string name="view_episode_link_failed">Cannot open this link at the moment, please try again later</string>
     <string name="share">Share</string>
     <string name="close">close</string>
+    <string name="loading_dots">…</string>
+    <string name="playback_channel_name">Now Playing</string>
 
 </resources>

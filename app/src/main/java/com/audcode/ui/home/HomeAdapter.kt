@@ -32,9 +32,7 @@ class HomeAdapter @Inject constructor() :
 
             holder.author.text = episodes[position].author
             holder.title.text = episodes[position].name
-          // holder.stack.text = episodes[position].mainStack
-           // holder.ratingCount.text = episodes[position].ratingCount.toString()
-            Glide.with(holder.itemView.context).load(if (position%2 ==0) (R.drawable.me) else (R.drawable.kot)).into(holder.image)
+            Glide.with(holder.itemView.context).load(R.drawable.me).into(holder.image)
             holder.itemView.setOnClickListener {
                 listener.onClick(position, it)
             }

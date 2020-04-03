@@ -12,6 +12,7 @@ data class EpisodeModel(
     val content:String?,
     val author: String,
     val tags: ArrayList<String>,
-    var isPlaying:Boolean = false
+    var isPlaying:Boolean = false,
+    var url:String =""
 ):Parcelable
 

@@ -6,15 +6,13 @@ import android.content.Context
 import android.net.Uri
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-
 import com.audcode.BaseApp
+import com.audcode.ui.splash.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_toolbar.*
@@ -28,7 +26,6 @@ fun Context.isServiceRunning(serviceClassName: String): Boolean {
     return activityManager?.getRunningServices(Integer.MAX_VALUE)?.any { it.service.className == serviceClassName }
         ?: false
 }
-
 
 
 fun Context.dpToPx(valueInDp: Float): Float {
@@ -58,8 +55,11 @@ val Fragment.toolBar: Toolbar
 val Fragment.bottomNavigation: BottomNavigationView
     get() = (activity as AppCompatActivity)?.bottomNavigationView
 
-val Fragment.bottomPlayer :ConstraintLayout
+val Fragment.bottomPlayer: ConstraintLayout
     get() = (activity as AppCompatActivity)?.lastPlayedLayout
+
+val Fragment.holderActivity: MainActivity
+    get() = (activity as MainActivity)
 
 fun Fragment.openUrl(url: String): Boolean {
     try {

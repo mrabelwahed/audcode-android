@@ -10,6 +10,7 @@ import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.mapper.EpisodeModelMapper
 import com.audcode.ui.viewmodel.BaseViewModel
 import com.audcode.ui.viewstate.ServerDataState
+import com.google.android.exoplayer2.SimpleExoPlayer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -19,13 +20,14 @@ import javax.inject.Inject
 class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     BaseViewModel() {
     val viewState = MutableLiveData<ServerDataState>()
-    val lastPlayedEpisode = MutableLiveData<EpisodeModel>()
+    private val lastPlayedEpisode = MutableLiveData<EpisodeModel>()
+    val lastLiveEpisode :LiveData<EpisodeModel>
+    get()= lastPlayedEpisode
     val episodeLiveData: LiveData<ServerDataState>
         get() = viewState
 
     private var lastQuery:String? = null
     private var lastOffset = 0L
-
 
     private fun setFailure(throwable: Throwable): ServerDataState {
         return when (throwable) {
@@ -47,7 +49,7 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     }
 
     fun incrementOffset(){
-        this.lastOffset += 10
+        this.lastOffset += 20
     }
 
 
@@ -62,12 +64,7 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
 
 
 
-   fun play(episode:EpisodeModel){
-     //lastPlayedEpisode.isPlaying = true
-   }
 
-    fun pasue(episode:EpisodeModel){
-        //lastPlayedEpisode.isPlaying = false
-    }
+
 
 }
