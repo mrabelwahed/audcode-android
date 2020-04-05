@@ -12,7 +12,8 @@ object EpisodeModelMapper {
             episode.createdAt,
             episode.content,
             episode.author,
-            episode.tags
+            episode.tags,
+            url = episode.url
         )
     }
 

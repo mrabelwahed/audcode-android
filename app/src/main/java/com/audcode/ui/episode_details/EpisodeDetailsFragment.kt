@@ -1,7 +1,6 @@
 package com.audcode.ui.episode_details
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,29 +9,19 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
-import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
 import com.audcode.ui.*
-import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
-import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
-import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_episode_details.*
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 class EpisodeDetailsFragment : BaseFragment() {
     override fun getLayoutById() = R.layout.fragment_episode_details
-    private lateinit var homeVM: HomeVM
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private var isEpisodePlaying = false
-
+    private var isPlaying = false
     val selectedEpisode: EpisodeModel by lazy {
         arguments?.getParcelable(SELECTED_EPISODE) as EpisodeModel
     }
@@ -42,28 +31,19 @@ class EpisodeDetailsFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        app.appComponent.newHomeComponent().inject(this)
-        homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //change icon of fab to play if the episide is running and selected episode is this
-//        holderActivity.getLastPlayedEpisode()?.let { episode ->
-//            if (episode.isPlaying && episode.id == selectedEpisode.id) {
-//                selectedEpisode.isPlaying = true
-//                holderActivity.setLastPlayedEpisode(selectedEpisode)
-//                playButton.setImageResource(R.drawable.ic_pause_24px)
-//            } else {
-//                selectedEpisode.isPlaying = false
-//                holderActivity.setLastPlayedEpisode(selectedEpisode)
-//                playButton.setImageResource(R.drawable.vd_play_arrow)
-//            }
-//
-//        }
+        getLastPlayedEpisode()?.let { episode ->
+            if (episode.isPlaying && episode.id == selectedEpisode.id) {
+                playButton.setImageResource(R.drawable.ic_pause_24px)
+            } else {
+                playButton.setImageResource(R.drawable.vd_play_arrow)
+            }
+
+        }
         episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
         renderTags(selectedEpisode)
@@ -75,8 +55,10 @@ class EpisodeDetailsFragment : BaseFragment() {
 
     private fun handleFabPlayButton() {
         playButton.setOnClickListener {
-            if (isEpisodePlaying) {
-                isEpisodePlaying = false
+            getLastPlayedEpisode()?.let {episode ->
+              isPlaying = episode.isPlaying
+            }
+            if (isPlaying) {
                 selectedEpisode.isPlaying = false
                 homeVM.setLastPlayedEpisode(selectedEpisode)
                 playButton.setImageResource(R.drawable.vd_play_arrow)
@@ -85,7 +67,6 @@ class EpisodeDetailsFragment : BaseFragment() {
                     .setImageResource(R.drawable.ic_play_arrow_24px)
                 homeVM.lastLiveEpisode.value?.let { holderActivity.pause(it) }
             } else {
-                isEpisodePlaying = true
                 playButton.setImageResource(R.drawable.ic_pause_24px)
                 bottomPlayer.visibility = View.VISIBLE
                 bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton)
@@ -95,16 +76,8 @@ class EpisodeDetailsFragment : BaseFragment() {
                 homeVM.setLastPlayedEpisode(selectedEpisode)
                 homeVM.lastLiveEpisode.value?.let { holderActivity.play(it) }
             }
+
         }
-    }
-
-
-    private fun observeLastPlayingEpisode() {
-        homeVM.lastLiveEpisode.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            (activity as MainActivity).playingEpisode = it
-            holderActivity.setLastPlayedEpisode(it)
-            (activity as MainActivity).showLastPlayedEpisode()
-        })
     }
 
 

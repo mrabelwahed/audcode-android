@@ -6,5 +6,6 @@ data class Episode(
     val createdAt:String,
     val content:String?,
     val author: String,
-    val tags: ArrayList<String>
+    val tags: ArrayList<String>,
+    val url:String
 )

@@ -50,65 +50,30 @@ class MainActivity : BaseActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainNavHostFragment, SplashFragment()).commit()
 
-            bottomPlayerButton.setOnClickListener {
-                getLastPlayedEpisode()?.let { episode ->
-                    if (episode.isPlaying){
-                        bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
-                        pause(episode)
-                        episode.isPlaying = false
-                        setLastPlayedEpisode(episode)
-                    }
-
-                    else{
-                        bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
-                        episode.isPlaying = true
-                        setLastPlayedEpisode(episode)
-                        play(episode)
-                    }
-
-                }
-        }
-
-    }
-
-    fun getLastPlayedEpisode(): EpisodeModel? {
-        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        val lastPlayedStr = sharedPref.getString(LAST_PLAYED, "")
-
-        if (lastPlayedStr.isNotEmpty())
-            return Gson().fromJson(lastPlayedStr, EpisodeModel::class.java)
-        return null
-    }
-
-    fun setLastPlayedEpisode(episodeModel: EpisodeModel) {
-            val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-            val editor = sharedPref.edit()
-            editor.putString(LAST_PLAYED, Gson().toJson(episodeModel))
-            editor.apply()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        playingEpisode?.let { setLastPlayedEpisode(it) }
+//            bottomPlayerButton.setOnClickListener {
+//                getLastPlayedEpisode()?.let { episode ->
+//                    if (episode.isPlaying){
+//                        bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
+//                        pause(episode)
+//                        episode.isPlaying = false
+//                        setLastPlayedEpisode(episode)
+//                    }
+//
+//                    else{
+//                        bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
+//                        episode.isPlaying = true
+//                        setLastPlayedEpisode(episode)
+//                        play(episode)
+//                    }
+//
+//                }
+//        }
 
     }
 
-    override fun onResume() {
-        super.onResume()
-           // showLastPlayedEpisode()
-    }
 
-    fun showLastPlayedEpisode() {
-        var lastPlayedEpisode = getLastPlayedEpisode()
-        lastPlayedEpisode?.let {episode ->
-            lastPlayedLayout.visibility = View.VISIBLE
-            lastPlayedLayout.findViewById<TextView>(R.id.lastPlayedEpisodeTitle).text = episode.name
-            if (episode.isPlaying)
-                bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
-            else
-                bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
-        }
-    }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -129,8 +94,6 @@ class MainActivity : BaseActivity() {
 
 
     fun play(episodeModel: EpisodeModel){
-        //TODO:remove this
-        episodeModel.url ="https://audcode-space.fra1.digitaloceanspaces.com/eee.m4a"
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
             bundle.putParcelable(AppConst.keys.SERVICE_EPISODE,episodeModel)
@@ -141,9 +104,6 @@ class MainActivity : BaseActivity() {
     }
 
     fun pause(episodeModel: EpisodeModel){
-        episodeModel.url ="https://audcode-space.fra1.digitaloceanspaces.com/eee.m4a"
-
-
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
             bundle.putParcelable(AppConst.keys.SERVICE_EPISODE,episodeModel)

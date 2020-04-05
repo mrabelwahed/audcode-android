@@ -11,7 +11,8 @@ object EpisodesMapper {
             res.createdAt,
             res.content,
             res.author,
-            res.tags
+            res.tags,
+            res.url
         )
     }
 

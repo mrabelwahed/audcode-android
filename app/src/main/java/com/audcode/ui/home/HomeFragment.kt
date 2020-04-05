@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), OnClickListener {
-    private lateinit var homeVM: HomeVM
     override fun getLayoutById() = R.layout.fragment_home
     private var totalItemCount = 0
     private var lastVisibleItem = 0
@@ -35,11 +34,10 @@ class HomeFragment : BaseFragment(), OnClickListener {
     private lateinit var episodesLayoutManager: LinearLayoutManager
     private val VISIBLE_THRESHOLD = 1
     private var newQueryIsFired = false
-    @Inject
+
+
     lateinit var homeAdapter: HomeAdapter
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private var isFirstLaunch: Boolean = true
+
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +65,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
     }
 
     private fun initUI() {
+        homeAdapter = HomeAdapter()
         setupView()
         setupLoadMoreListener()
         observeEpisodes()
@@ -76,13 +75,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
 
 
 
-    private fun observeLastPlayingEpisode() {
-        homeVM.lastLiveEpisode.observe(viewLifecycleOwner, Observer {
-            holderActivity.playingEpisode = it
-            holderActivity.setLastPlayedEpisode(it)
-            holderActivity.showLastPlayedEpisode()
-        })
-    }
+
 
     private fun setupView() {
         episodesLayoutManager = LinearLayoutManager(context)
@@ -196,15 +189,9 @@ class HomeFragment : BaseFragment(), OnClickListener {
 
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        app.appComponent.newHomeComponent().inject(this)
-        homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
-        bottomNavigation.visibility = View.VISIBLE
-    }
+
 
     override fun onClick(position: Int, view: View) {
-        isFirstLaunch = false
         val bundle = Bundle()
         bundle.putParcelable(SELECTED_EPISODE, homeAdapter.episodes[position])
         val episodeDetailsFragment = EpisodeDetailsFragment()
