@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.audcode.R
 import com.audcode.ui.BaseFragment
+import com.audcode.ui.home.model.EpisodeModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment() {
@@ -30,4 +31,5 @@ class LoginFragment : BaseFragment() {
         }
 
     }
+
 }

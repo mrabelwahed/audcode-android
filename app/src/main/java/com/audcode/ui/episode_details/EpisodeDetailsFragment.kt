@@ -9,6 +9,7 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
+import android.widget.TextView
 import com.audcode.R
 import com.audcode.ui.*
 import com.audcode.ui.home.model.EpisodeModel
@@ -16,6 +17,7 @@ import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_episode_details.*
+import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,14 +38,8 @@ class EpisodeDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //change icon of fab to play if the episide is running and selected episode is this
-        getLastPlayedEpisode()?.let { episode ->
-            if (episode.isPlaying && episode.id == selectedEpisode.id) {
-                playButton.setImageResource(R.drawable.ic_pause_24px)
-            } else {
-                playButton.setImageResource(R.drawable.vd_play_arrow)
-            }
-
-        }
+        getLastPlayedEpisode()?.let { episode -> notifyPlayFabButton(episode)}
+        homeVM.lastLiveEpisode.observe(viewLifecycleOwner, androidx.lifecycle.Observer { notifyPlayFabButton(it) })
         episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
         renderTags(selectedEpisode)
@@ -63,22 +59,40 @@ class EpisodeDetailsFragment : BaseFragment() {
                 homeVM.setLastPlayedEpisode(selectedEpisode)
                 playButton.setImageResource(R.drawable.vd_play_arrow)
                 bottomPlayer.visibility = View.VISIBLE
-                bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton)
-                    .setImageResource(R.drawable.ic_play_arrow_24px)
-                homeVM.lastLiveEpisode.value?.let { holderActivity.pause(it) }
+                holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
+                holderActivity.lastPlayedEpisodeTitle.text = selectedEpisode.name
+                homeVM.lastLiveEpisode.value?.let {
+                    holderActivity.pause(it)
+                    setLastPlayedEpisode(it)
+                }
+
+
             } else {
                 playButton.setImageResource(R.drawable.ic_pause_24px)
                 bottomPlayer.visibility = View.VISIBLE
-                bottomPlayer.findViewById<ImageButton>(R.id.bottomPlayerButton)
-                    .setImageResource(R.drawable.ic_pause_32px)
+                holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
                 holderActivity.playingEpisode = selectedEpisode
                 selectedEpisode.isPlaying = true
                 homeVM.setLastPlayedEpisode(selectedEpisode)
-                homeVM.lastLiveEpisode.value?.let { holderActivity.play(it) }
+                holderActivity.lastPlayedEpisodeTitle.text = selectedEpisode.name
+                homeVM.lastLiveEpisode.value?.let {
+                    holderActivity.play(it)
+                    setLastPlayedEpisode(it)
+                }
             }
 
         }
     }
+
+
+     fun notifyPlayFabButton(episode: EpisodeModel) {
+            if (episode.isPlaying && episode.id == selectedEpisode.id)
+                playButton.setImageResource(R.drawable.ic_pause_24px)
+            else
+                playButton.setImageResource(R.drawable.vd_play_arrow)
+    }
+
+
 
 
     fun formatDate(dateStr: String): String {

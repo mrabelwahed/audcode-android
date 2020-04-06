@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
 
     }
 
+
     private fun initUI() {
         homeAdapter = HomeAdapter()
         setupView()

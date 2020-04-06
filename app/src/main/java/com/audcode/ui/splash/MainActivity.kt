@@ -49,26 +49,6 @@ class MainActivity : BaseActivity() {
     override fun initUI() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainNavHostFragment, SplashFragment()).commit()
-
-//            bottomPlayerButton.setOnClickListener {
-//                getLastPlayedEpisode()?.let { episode ->
-//                    if (episode.isPlaying){
-//                        bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
-//                        pause(episode)
-//                        episode.isPlaying = false
-//                        setLastPlayedEpisode(episode)
-//                    }
-//
-//                    else{
-//                        bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
-//                        episode.isPlaying = true
-//                        setLastPlayedEpisode(episode)
-//                        play(episode)
-//                    }
-//
-//                }
-//        }
-
     }
 
 

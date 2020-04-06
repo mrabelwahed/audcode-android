@@ -26,6 +26,7 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     val episodeLiveData: LiveData<ServerDataState>
         get() = viewState
 
+
     private var lastQuery:String? = null
     private var lastOffset = 0L
 

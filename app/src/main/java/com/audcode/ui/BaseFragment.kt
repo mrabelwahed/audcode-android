@@ -32,6 +32,28 @@ abstract class BaseFragment : Fragment() {
         return inflater.inflate(getLayoutById(), container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        holderActivity.bottomPlayerButton.setOnClickListener {
+            getLastPlayedEpisode()?.let { episode ->
+                if (episode.isPlaying) {
+                    holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
+                    holderActivity.pause(episode)
+                    episode.isPlaying = false
+                    setLastPlayedEpisode(episode)
+                } else {
+                    holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
+                    episode.isPlaying = true
+                    setLastPlayedEpisode(episode)
+                    holderActivity.play(episode)
+
+                }
+                homeVM.setLastPlayedEpisode(episode)
+            }
+        }
+    }
+
+
     abstract fun getLayoutById(): Int
 
     fun observeLastPlayingEpisode() {
@@ -63,7 +85,7 @@ abstract class BaseFragment : Fragment() {
         return null
     }
 
-    private fun setLastPlayedEpisode(episodeModel: EpisodeModel) {
+     fun setLastPlayedEpisode(episodeModel: EpisodeModel) {
         val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
             MainActivity.PREF_NAME,
             MainActivity.PRIVATE_MODE
@@ -95,5 +117,6 @@ abstract class BaseFragment : Fragment() {
                 holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
         }
     }
+
 
 }
