@@ -1,22 +1,20 @@
 package com.audcode.ui.home
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.audcode.R
 import com.audcode.data.exceptions.Failure
-import com.audcode.ui.*
+import com.audcode.ui.BaseFragment
+import com.audcode.ui.HomeAdapter
+import com.audcode.ui.OnClickListener
 import com.audcode.ui.decoration.SpacesItemDecoration
 import com.audcode.ui.episode_details.EpisodeDetailsFragment
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
-import com.audcode.ui.viewmodel.ViewModelFactory
 import com.audcode.ui.viewstate.ServerDataState
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,7 +22,6 @@ import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), OnClickListener {
     override fun getLayoutById() = R.layout.fragment_home
@@ -34,48 +31,47 @@ class HomeFragment : BaseFragment(), OnClickListener {
     private lateinit var episodesLayoutManager: LinearLayoutManager
     private val VISIBLE_THRESHOLD = 1
     private var newQueryIsFired = false
+    val homeAdapter = HomeAdapter()
+
+    var isOpenAgain = false
 
 
-    lateinit var homeAdapter: HomeAdapter
-
-
-    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //homeVM.setNewQuery(homeVM.lastQuery)
         initUI()
-        RxTextView.textChanges(searchInput)
-            .filter { text -> text.length >= 3 || text.isEmpty() }
-            .debounce(150, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it.isEmpty()) {
-                    homeVM.setNewQuery(null)
-                    homeVM.loadNextPage()
-                } else {
-                    homeVM.setNewQuery(it.toString())
-                    homeVM.loadNextPage()
-                }
 
-                homeAdapter.clearAll()
-                shimmerView.visibility = View.VISIBLE
-                shimmerView.startShimmer()
-            }
+            RxTextView.textChanges(searchInput)
+                .filter { text -> text.length >= 3 || text.isEmpty() }
+                .debounce(250, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (!isOpenAgain){
+                        if (it.isEmpty()) {
+                            homeVM.setNewQuery(null)
+                            homeVM.loadNextPage()
+                        } else {
+                            homeVM.setNewQuery(it.toString())
+                            homeVM.loadNextPage()
+                        }
+                        newQueryIsFired = true
+                        homeAdapter.clearAll()
+                        shimmerView.visibility = View.VISIBLE
+                        shimmerView.startShimmer()
+                    }
+                    isOpenAgain = false
+                }
 
 
     }
 
 
     private fun initUI() {
-        homeAdapter = HomeAdapter()
         setupView()
         setupLoadMoreListener()
         observeEpisodes()
         observeLastPlayingEpisode()
     }
-
-
-
-
 
 
     private fun setupView() {
@@ -191,8 +187,8 @@ class HomeFragment : BaseFragment(), OnClickListener {
     }
 
 
-
     override fun onClick(position: Int, view: View) {
+        isOpenAgain = true
         val bundle = Bundle()
         bundle.putParcelable(SELECTED_EPISODE, homeAdapter.episodes[position])
         val episodeDetailsFragment = EpisodeDetailsFragment()
@@ -200,7 +196,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
         (activity as MainActivity).supportFragmentManager.beginTransaction().replace(
             R.id.mainNavHostFragment,
             episodeDetailsFragment
-        ).addToBackStack("null").commit()
+        ).addToBackStack("episode_details_transaction").commit()
 
     }
 

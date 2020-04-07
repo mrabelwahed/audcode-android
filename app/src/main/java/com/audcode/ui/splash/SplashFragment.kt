@@ -2,6 +2,7 @@ package com.audcode.ui.splash
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import com.audcode.R
 import com.audcode.ui.BaseFragment
 import com.audcode.ui.bottomNavigation
@@ -17,8 +18,9 @@ class SplashFragment : BaseFragment() {
 
         android.os.Handler().postDelayed(
             Runnable {
+                val homeFragment = HomeFragment()
                 (activity as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainNavHostFragment, HomeFragment())
+                    .replace(R.id.mainNavHostFragment, homeFragment)
                     .commit()
             }
             , 1000

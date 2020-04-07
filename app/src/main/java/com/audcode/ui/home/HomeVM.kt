@@ -27,7 +27,9 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
         get() = viewState
 
 
-    private var lastQuery:String? = null
+
+
+     var lastQuery:String? = null
     private var lastOffset = 0L
 
     private fun setFailure(throwable: Throwable): ServerDataState {
@@ -62,6 +64,7 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
     fun setLastPlayedEpisode(episode: EpisodeModel){
        lastPlayedEpisode.value = episode
     }
+
 
 
 
