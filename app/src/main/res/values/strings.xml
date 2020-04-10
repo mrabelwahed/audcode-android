@@ -26,5 +26,7 @@
     <string name="close">close</string>
     <string name="loading_dots">…</string>
     <string name="playback_channel_name">Now Playing</string>
+    <string name="channel_name">channelName</string>
+    <string name="channel_description">ChannelDescription</string>
 
 </resources>

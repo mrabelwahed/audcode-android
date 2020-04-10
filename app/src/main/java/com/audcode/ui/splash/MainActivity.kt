@@ -3,32 +3,20 @@ package com.audcode.ui.splash
 import android.content.*
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
-import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.audcode.AppConst
 import com.audcode.AppConst.keys.PAUSE
 import com.audcode.AppConst.keys.PLAY
 import com.audcode.R
-import com.audcode.service.AudioService
+import com.audcode.audio.AudioService
 import com.audcode.ui.BaseActivity
-import com.audcode.ui.bottomPlayer
-import com.audcode.ui.episode_details.EpisodeDetailsFragment
-import com.audcode.ui.holderActivity
-import com.audcode.ui.home.HomeFragment
 import com.audcode.ui.home.model.EpisodeModel
 import com.google.android.exoplayer2.util.Util
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.view_bottom_player.*
-import kotlinx.android.synthetic.main.view_bottom_player.view.*
 
 class MainActivity : BaseActivity() {
 
     var playingEpisode: EpisodeModel? = null
     private var mBound: Boolean = false
-    private lateinit var audioService :AudioService
+     lateinit var audioService :AudioService
 
     private val connection = object : ServiceConnection {
 
@@ -71,8 +59,6 @@ class MainActivity : BaseActivity() {
 
 
 
-
-
     fun play(episodeModel: EpisodeModel){
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
@@ -83,7 +69,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun pause(episodeModel: EpisodeModel){
+    fun pause(episodeModel: EpisodeModel , withStop:Boolean = false){
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
             bundle.putParcelable(AppConst.keys.SERVICE_EPISODE,episodeModel)
@@ -91,6 +77,14 @@ class MainActivity : BaseActivity() {
             intent.putExtra(AppConst.keys.BUNDLE_KEY,bundle)
             Util.startForegroundService(this,intent)
         }
+        if (withStop)
+            stopAudioService()
+    }
+
+    private fun stopAudioService() {
+        unbindService(connection)
+        mBound = false
+        stopService(Intent(this, AudioService::class.java))
     }
 
 

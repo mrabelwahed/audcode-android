@@ -2,15 +2,15 @@ package com.audcode.ui.episode_details
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ImageButton
-import android.widget.TextView
 import com.audcode.R
+import com.audcode.audio.PlayerState
 import com.audcode.ui.*
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
@@ -46,6 +46,7 @@ class EpisodeDetailsFragment : BaseFragment() {
         renderContent(selectedEpisode)
         observeLastPlayingEpisode()
         handleFabPlayButton()
+
     }
 
 
@@ -87,11 +88,18 @@ class EpisodeDetailsFragment : BaseFragment() {
 
      fun notifyPlayFabButton(episode: EpisodeModel) {
             if (episode.isPlaying && episode.id == selectedEpisode.id)
-                playButton.setImageResource(R.drawable.ic_pause_24px)
+                   playButton.setImageResource(R.drawable.ic_pause_24px)
             else
                 playButton.setImageResource(R.drawable.vd_play_arrow)
     }
 
+
+    fun handleNotificationAction(episode: EpisodeModel) {
+        if (episode.isPlaying && episode.id == selectedEpisode.id)
+            playButton.setImageResource(R.drawable.ic_pause_24px)
+        else
+            playButton.setImageResource(R.drawable.vd_play_arrow)
+    }
 
 
 

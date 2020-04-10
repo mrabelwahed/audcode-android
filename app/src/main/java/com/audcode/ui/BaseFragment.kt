@@ -3,6 +3,7 @@ package com.audcode.ui
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
+import com.audcode.audio.PlayerState
+import com.audcode.ui.episode_details.EpisodeDetailsFragment
+import com.audcode.ui.home.HomeFragment
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity
@@ -35,22 +39,62 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         holderActivity.bottomPlayerButton.setOnClickListener {
-            getLastPlayedEpisode()?.let { episode ->
-                if (episode.isPlaying) {
-                    holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
-                    holderActivity.pause(episode)
-                    episode.isPlaying = false
-                    setLastPlayedEpisode(episode)
-                } else {
-                    holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
-                    episode.isPlaying = true
-                    setLastPlayedEpisode(episode)
-                    holderActivity.play(episode)
-
-                }
-                homeVM.setLastPlayedEpisode(episode)
-            }
+            getLastPlayedEpisode()?.let { episode -> handlePlayerStatus(episode) }
         }
+
+        holderActivity.audioService.playerStatusLiveData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { playerStatus ->
+
+                if (this is EpisodeDetailsFragment){
+                    if (playerStatus is PlayerState.Playing){
+                        setLastPlayedEpisode(playerStatus.episode)
+                        handleNotificationAction(playerStatus.episode)
+                        handleBottomPlayerFromNotification(playerStatus.episode)
+                    }
+                    else if (playerStatus is PlayerState.Paused){
+                        setLastPlayedEpisode(playerStatus.episode)
+                        handleNotificationAction(playerStatus.episode)
+                        handleBottomPlayerFromNotification(playerStatus.episode)
+                    }
+                }else if (this is HomeFragment){
+                    if (playerStatus is PlayerState.Playing){
+                        setLastPlayedEpisode(playerStatus.episode)
+                        handleBottomPlayerFromNotification(playerStatus.episode)
+
+                    }else if(playerStatus is PlayerState.Paused){
+                        setLastPlayedEpisode(playerStatus.episode)
+                        handleBottomPlayerFromNotification(playerStatus.episode)
+                    }
+                }
+
+                Log.e("status", playerStatus.toString())
+            })
+
+    }
+
+   private  fun handleBottomPlayerFromNotification(episode: EpisodeModel){
+        if (episode.isPlaying)
+            holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
+        else
+            holderActivity.bottomPlayerButton.setImageResource((R.drawable.ic_play_arrow_24px))
+    }
+
+
+    private fun handlePlayerStatus(episode: EpisodeModel) {
+        if (episode.isPlaying) {
+            holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
+            holderActivity.pause(episode)
+            episode.isPlaying = false
+            setLastPlayedEpisode(episode)
+        } else {
+            holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
+            episode.isPlaying = true
+            setLastPlayedEpisode(episode)
+            holderActivity.play(episode)
+
+        }
+        homeVM.setLastPlayedEpisode(episode)
     }
 
 
@@ -59,9 +103,7 @@ abstract class BaseFragment : Fragment() {
     fun observeLastPlayingEpisode() {
         homeVM.lastLiveEpisode.observe(viewLifecycleOwner, Observer { episode ->
             holderActivity.playingEpisode = episode
-            //homeVM.setLastPlayedEpisode(episode)
             setLastPlayedEpisode(episode)
-            //showLastPlayedEpisode()
         })
     }
 
@@ -85,7 +127,7 @@ abstract class BaseFragment : Fragment() {
         return null
     }
 
-     fun setLastPlayedEpisode(episodeModel: EpisodeModel) {
+    fun setLastPlayedEpisode(episodeModel: EpisodeModel) {
         val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
             MainActivity.PREF_NAME,
             MainActivity.PRIVATE_MODE
