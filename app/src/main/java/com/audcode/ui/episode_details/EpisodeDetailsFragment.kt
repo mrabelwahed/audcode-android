@@ -1,6 +1,7 @@
 package com.audcode.ui.episode_details
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,9 +10,11 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
 import com.audcode.audio.PlayerState
 import com.audcode.ui.*
+import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.google.android.material.chip.Chip
@@ -27,6 +30,8 @@ class EpisodeDetailsFragment : BaseFragment() {
     val selectedEpisode: EpisodeModel by lazy {
         arguments?.getParcelable(SELECTED_EPISODE) as EpisodeModel
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

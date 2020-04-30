@@ -20,7 +20,7 @@ class SplashFragment : BaseFragment() {
             Runnable {
                 val homeFragment = HomeFragment()
                 (activity as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainNavHostFragment, homeFragment)
+                    .replace(R.id.container, homeFragment)
                     .commit()
             }
             , 1000

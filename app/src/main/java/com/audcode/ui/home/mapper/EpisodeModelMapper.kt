@@ -1,4 +1,4 @@
-package com.audcode.ui.mapper
+package com.audcode.ui.home.mapper
 
 import com.audcode.domain.model.Episode
 import com.audcode.ui.home.model.EpisodeModel

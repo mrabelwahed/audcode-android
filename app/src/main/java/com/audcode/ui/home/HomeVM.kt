@@ -1,23 +1,21 @@
 package com.audcode.ui.home
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.audcode.data.exceptions.Failure
-import com.audcode.domain.interactor.GetEpisodesUC
+import com.audcode.domain.interactor.GetEpisodes
 import com.audcode.ui.dto.QueryDTO
 import com.audcode.ui.home.model.EpisodeModel
-import com.audcode.ui.mapper.EpisodeModelMapper
+import com.audcode.ui.home.mapper.EpisodeModelMapper
 import com.audcode.ui.viewmodel.BaseViewModel
 import com.audcode.ui.viewstate.ServerDataState
-import com.google.android.exoplayer2.SimpleExoPlayer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
 
-class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
+class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodes) :
     BaseViewModel() {
     val viewState = MutableLiveData<ServerDataState>()
     private val lastPlayedEpisode = MutableLiveData<EpisodeModel>()
@@ -32,13 +30,7 @@ class HomeVM @Inject constructor(private val getEpisodesUC: GetEpisodesUC) :
      var lastQuery:String? = null
     private var lastOffset = 0L
 
-    private fun setFailure(throwable: Throwable): ServerDataState {
-        return when (throwable) {
-            is UnknownHostException -> ServerDataState.Error(Failure.NetworkConnection)
-            is HttpException -> ServerDataState.Error(Failure.ServerError)
-            else -> ServerDataState.Error(Failure.UnExpectedError)
-        }
-    }
+
 
 
     fun loadNextPage() {

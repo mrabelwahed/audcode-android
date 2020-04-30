@@ -9,7 +9,7 @@ import com.audcode.di.scope.AppScope
     modules = [
         NetworkModule::class,
         RepositoryModule::class,
-        EpisodeUsecase::class
+        AudcodeUseCase::class
     ]
 )
 interface TestAppComponent : AppComponent {

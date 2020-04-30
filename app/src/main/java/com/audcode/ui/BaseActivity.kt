@@ -1,15 +1,11 @@
 package com.audcode.ui
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.audcode.ui.home.model.EpisodeModel
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.audcode.R
+
 
 abstract  class BaseActivity : AppCompatActivity() {
 
@@ -20,6 +16,12 @@ abstract  class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutById())
         initUI()
+    }
+
+      fun loadFragment(fragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
     }
 
 

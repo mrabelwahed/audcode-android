@@ -36,6 +36,13 @@ abstract class BaseFragment : Fragment() {
         return inflater.inflate(getLayoutById(), container, false)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        app.appComponent.newHomeComponent().inject(this)
+        homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
+        bottomNavigation.visibility = View.VISIBLE
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         holderActivity.bottomPlayerButton.setOnClickListener {
@@ -107,12 +114,6 @@ abstract class BaseFragment : Fragment() {
         })
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        app.appComponent.newHomeComponent().inject(this)
-        homeVM = ViewModelProvider(this, viewModelFactory)[HomeVM::class.java]
-        bottomNavigation.visibility = View.VISIBLE
-    }
 
     fun getLastPlayedEpisode(): EpisodeModel? {
 

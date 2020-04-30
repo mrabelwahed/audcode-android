@@ -7,7 +7,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class GetEpisodesUC(private val episodeRepository: EpisodeRepository) :
+class GetEpisodes(private val episodeRepository: EpisodeRepository) :
     UseCase<QueryDTO, List<Episode>> {
     override fun execute(param: QueryDTO): Flowable<List<Episode>> {
         return episodeRepository.getEpisodes(param)

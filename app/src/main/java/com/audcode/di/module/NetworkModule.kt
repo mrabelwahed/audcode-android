@@ -2,7 +2,7 @@ package com.audcode.di.module
 
 import com.audcode.AppConst.TIMEOUT_REQUEST
 import com.audcode.data.network.AuthInterceptor
-import com.audcode.data.network.EpisodeApi
+import com.audcode.data.network.AudcodeAPI
 
 import com.audcode.di.scope.AppScope
 import dagger.Module
@@ -52,5 +52,5 @@ import java.util.concurrent.TimeUnit
     @AppScope
     @Provides
      fun provideFeedService(builder: Retrofit.Builder) =
-        builder.baseUrl(baseUrl).build().create(EpisodeApi::class.java)
+        builder.baseUrl(baseUrl).build().create(AudcodeAPI::class.java)
 }

@@ -1,15 +1,15 @@
 package com.audcode.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.audcode.R
 import com.audcode.data.exceptions.Failure
-import com.audcode.ui.BaseFragment
-import com.audcode.ui.HomeAdapter
-import com.audcode.ui.OnClickListener
+import com.audcode.ui.*
 import com.audcode.ui.decoration.SpacesItemDecoration
 import com.audcode.ui.episode_details.EpisodeDetailsFragment
 import com.audcode.ui.home.model.EpisodeModel
@@ -34,6 +34,8 @@ class HomeFragment : BaseFragment(), OnClickListener {
     val homeAdapter = HomeAdapter()
 
     var isOpenAgain = false
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -194,7 +196,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
         val episodeDetailsFragment = EpisodeDetailsFragment()
         episodeDetailsFragment.arguments = bundle
         (activity as MainActivity).supportFragmentManager.beginTransaction().replace(
-            R.id.mainNavHostFragment,
+            R.id.container,
             episodeDetailsFragment
         ).addToBackStack("episode_details_transaction").commit()
 
