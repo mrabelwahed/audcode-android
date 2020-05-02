@@ -1,5 +1,6 @@
 package com.audcode.data.network
 
+import com.audcode.data.network.response.AuthRes
 import com.audcode.data.network.response.EpisodeRes
 import com.audcode.data.network.response.UserRes
 import com.audcode.ui.dto.UserDTO
@@ -22,5 +23,5 @@ interface AudcodeAPI {
     fun createUser(@Body userDTO: UserDTO): Flowable<UserRes>
 
     @POST("/api/v1/user/login")
-    fun authenticateUser(@Body userDTO: UserDTO): Flowable<String>
+    fun authenticateUser(@Body userDTO: UserDTO): Flowable<AuthRes>
 }

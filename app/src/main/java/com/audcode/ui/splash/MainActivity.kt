@@ -1,6 +1,5 @@
 package com.audcode.ui.splash
 
-import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -8,11 +7,10 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.view.MenuItem
-import android.view.View
 import androidx.annotation.NonNull
 import com.audcode.AppConst
-import com.audcode.AppConst.keys.PAUSE
-import com.audcode.AppConst.keys.PLAY
+import com.audcode.AppConst.Keys.PAUSE
+import com.audcode.AppConst.Keys.PLAY
 import com.audcode.R
 import com.audcode.audio.AudioService
 import com.audcode.ui.BaseActivity
@@ -76,9 +74,9 @@ class MainActivity : BaseActivity() {
     fun play(episodeModel: EpisodeModel){
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
-            bundle.putParcelable(AppConst.keys.SERVICE_EPISODE,episodeModel)
-            bundle.putString(AppConst.keys.SERVICE_ACTION,PLAY)
-            intent.putExtra(AppConst.keys.BUNDLE_KEY,bundle)
+            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE,episodeModel)
+            bundle.putString(AppConst.Keys.SERVICE_ACTION,PLAY)
+            intent.putExtra(AppConst.Keys.BUNDLE_KEY,bundle)
             Util.startForegroundService(this,intent)
         }
     }
@@ -86,9 +84,9 @@ class MainActivity : BaseActivity() {
     fun pause(episodeModel: EpisodeModel , withStop:Boolean = false){
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
-            bundle.putParcelable(AppConst.keys.SERVICE_EPISODE,episodeModel)
-            bundle.putString(AppConst.keys.SERVICE_ACTION,PAUSE)
-            intent.putExtra(AppConst.keys.BUNDLE_KEY,bundle)
+            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE,episodeModel)
+            bundle.putString(AppConst.Keys.SERVICE_ACTION,PAUSE)
+            intent.putExtra(AppConst.Keys.BUNDLE_KEY,bundle)
             Util.startForegroundService(this,intent)
         }
         if (withStop)

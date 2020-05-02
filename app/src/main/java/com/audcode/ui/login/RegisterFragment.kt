@@ -1,21 +1,27 @@
 package com.ramadan.login
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.audcode.AppConst.Keys.USER_EMAIL
+import com.audcode.AppConst.Keys.USER_KEY
+import com.audcode.AppConst.Keys.USER_MODEL
+import com.audcode.AppConst.Keys.USER_PASSWORD
 import com.audcode.R
 import com.audcode.data.exceptions.Failure
-import com.audcode.ui.BaseFragment
-import com.audcode.ui.app
-import com.audcode.ui.bottomNavigation
+import com.audcode.ui.*
 import com.audcode.ui.dto.UserDTO
-import com.audcode.ui.holderActivity
 import com.audcode.ui.login.RegisterVM
 import com.audcode.ui.login.model.UserModel
+import com.audcode.ui.profile.ProfileFragment
+import com.audcode.ui.splash.MainActivity.Companion.PREF_NAME
+import com.audcode.ui.splash.MainActivity.Companion.PRIVATE_MODE
 import com.audcode.ui.viewstate.ServerDataState
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : BaseFragment() {
@@ -23,6 +29,8 @@ class RegisterFragment : BaseFragment() {
     override fun getLayoutById() = R.layout.fragment_register
 
     private lateinit var registerVM: RegisterVM
+    private lateinit var email: String;
+    private lateinit var password: String;
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,8 +46,8 @@ class RegisterFragment : BaseFragment() {
         }
 
         createAccountFab.setOnClickListener {
-            var email = emailInput.text.toString()
-            var password = passwordInput.text.toString()
+            email = emailInput.text.toString()
+            password = passwordInput.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty())
                 registerVM.createUser(UserDTO(email, password))
         }
@@ -48,8 +56,9 @@ class RegisterFragment : BaseFragment() {
             when (it) {
                 is ServerDataState.Success<*> -> {
                     val userModel = (it.item as UserModel)
+                    saveUserModel(userModel)
                     handleUISuccess()
-                    setData(userModel)
+                    openProfileFragment(userModel, email, password)
                 }
 
                 is ServerDataState.Error -> {
@@ -64,12 +73,20 @@ class RegisterFragment : BaseFragment() {
         })
     }
 
+
+
     private fun handleUISuccess() {
-        Toast.makeText(activity,"done",Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "done", Toast.LENGTH_LONG).show()
     }
 
-    private fun setData(userModel: UserModel) {
-
+    private fun openProfileFragment(userModel: UserModel, email: String, password: String) {
+        val bundle = Bundle()
+        bundle.putParcelable(USER_KEY, userModel)
+        bundle.putString(USER_EMAIL, email)
+        bundle.putString(USER_PASSWORD, password)
+        val profileFragment = ProfileFragment()
+        profileFragment.arguments = bundle
+        holderActivity.loadFragment(profileFragment)
     }
 
     private fun setError(failure: Failure?) {
@@ -80,5 +97,12 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun handleUILoading() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toolBar.visibility = View.GONE
+        bottomNavigation.visibility = View.GONE
+        bottomPlayer.visibility = View.GONE
     }
 }

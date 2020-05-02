@@ -8,7 +8,7 @@ object AppConst {
 
     const val LIMIT = 20
 
-    object keys {
+    object Keys {
         const val PLAY = "play"
         const val PAUSE = "pause"
         const val API_KEY = "api_key"
@@ -17,6 +17,10 @@ object AppConst {
         const val BUNDLE_KEY = "bundle_key"
         const val SERVICE_ACTION = "service_action"
         const val WITH_STOP_ACTION: String = "with_stop_action"
+        const val USER_KEY = "user_key"
+        const val USER_EMAIL ="user_email"
+        const val  USER_PASSWORD = "user_password"
+        const val USER_MODEL ="user_model"
     }
 
 

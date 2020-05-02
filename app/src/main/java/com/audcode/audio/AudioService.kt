@@ -208,14 +208,14 @@ class AudioService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val b = intent?.getBundleExtra(AppConst.keys.BUNDLE_KEY)
+        val b = intent?.getBundleExtra(AppConst.Keys.BUNDLE_KEY)
 
         if (b != null) {
             episodeModel =
-                b.getParcelable<Parcelable>(AppConst.keys.SERVICE_EPISODE) as EpisodeModel
-            serviceAction = b.getString(AppConst.keys.SERVICE_ACTION)
+                b.getParcelable<Parcelable>(AppConst.Keys.SERVICE_EPISODE) as EpisodeModel
+            serviceAction = b.getString(AppConst.Keys.SERVICE_ACTION)
         }
-        if (serviceAction == AppConst.keys.PLAY) {
+        if (serviceAction == AppConst.Keys.PLAY) {
             if (lastPlayingItem?.id != episodeModel.id)
                 releasePlayer()
 
@@ -224,7 +224,7 @@ class AudioService : Service() {
             else
                 resume()
             lastPlayingItem = episodeModel
-        } else if (serviceAction == AppConst.keys.PAUSE) {
+        } else if (serviceAction == AppConst.Keys.PAUSE) {
             pause()
         }
 

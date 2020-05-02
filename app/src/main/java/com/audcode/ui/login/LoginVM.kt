@@ -17,7 +17,7 @@ class LoginVM @Inject constructor(private val authUseCase: AuthenticateUser)  : 
     val userViewState: LiveData<ServerDataState>
         get() = userState
 
-    fun createUser(userDTO: UserDTO) {
+    fun authenticateUser(userDTO: UserDTO) {
         val disposable = authUseCase.execute(userDTO)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

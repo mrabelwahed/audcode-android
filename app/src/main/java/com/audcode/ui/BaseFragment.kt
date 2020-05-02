@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.audcode.AppConst
+import com.audcode.AppConst.Keys.USER_MODEL
 import com.audcode.R
 import com.audcode.audio.PlayerState
 import com.audcode.ui.episode_details.EpisodeDetailsFragment
 import com.audcode.ui.home.HomeFragment
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
+import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.gson.Gson
@@ -159,6 +162,27 @@ abstract class BaseFragment : Fragment() {
             else
                 holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_play_arrow_24px)
         }
+    }
+
+     fun saveUserModel(userModel: UserModel) {
+        val gson = Gson()
+        val modelStr = gson.toJson(userModel)
+        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
+            MainActivity.PREF_NAME,
+            MainActivity.PRIVATE_MODE
+        )
+        sharedPref.edit().putString(AppConst.Keys.USER_MODEL,modelStr).commit()
+    }
+
+     fun getUserModel():UserModel?{
+        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
+            MainActivity.PREF_NAME,
+            MainActivity.PRIVATE_MODE
+        )
+        val modelStr = sharedPref.getString(USER_MODEL,null)
+        if (modelStr.isNullOrEmpty())
+            return null
+        return Gson().fromJson(modelStr , UserModel::class.java)
     }
 
 

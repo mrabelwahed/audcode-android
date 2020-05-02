@@ -10,13 +10,15 @@ import com.audcode.ui.login.model.UserModel
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class UserDataRepository (private val audcodeAPI: AudcodeAPI) : UserRepository{
+class UserDataRepository (private val audcodeAPI: AudcodeAPI) : UserRepository {
     override fun createUser(userDTO: UserDTO): Flowable<User> {
         return audcodeAPI.createUser(userDTO)
             .map { res -> UserMapper.transform(res.body) }
     }
 
     override fun login(userDTO: UserDTO): Flowable<String> {
-        return audcodeAPI.authenticateUser(userDTO) }
-    }
+        return audcodeAPI.authenticateUser(userDTO)
+            .map { res -> UserMapper.transform(res) }
 
+    }
+}

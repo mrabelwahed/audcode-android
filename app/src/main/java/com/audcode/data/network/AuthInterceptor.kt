@@ -1,7 +1,7 @@
 package com.audcode.data.network
 
-import com.audcode.AppConst.keys.API_KEY
-import com.audcode.AppConst.keys.API_KEY_VALUE
+import com.audcode.AppConst.Keys.API_KEY
+import com.audcode.AppConst.Keys.API_KEY_VALUE
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
