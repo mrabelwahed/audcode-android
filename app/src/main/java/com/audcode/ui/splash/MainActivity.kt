@@ -108,10 +108,10 @@ class MainActivity : BaseActivity() {
                          loadFragment(HomeFragment())
                         return true
                     }
-                    R.id.action_lib -> {
-                         loadFragment(LibraryFragment())
-                        return true
-                    }
+//                    R.id.action_lib -> {
+//                         loadFragment(LibraryFragment())
+//                        return true
+//                    }
 
                     R.id.action_profile -> {
                         loadFragment(ProfileFragment())
