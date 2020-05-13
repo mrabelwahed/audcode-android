@@ -1,7 +1,7 @@
 package com.audcode.data.exceptions
 
-sealed class Failure{
+sealed class Failure {
     object NetworkConnection : Failure()
-    object ServerError : Failure()
-    object  UnExpectedError : Failure()
+    data class ServerError(val message : String) : Failure()
+    data class UnExpectedError( val message : String) : Failure()
 }

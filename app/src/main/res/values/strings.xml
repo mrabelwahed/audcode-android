@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Audcode</string>
     <string name="search">Search</string>
-    <string name="empty_text">It seems no data available now, try to  make a new search </string>
+    <string name="empty_text">It seems no data available for this tag , try to  make a new search </string>
     <string name="search_hint">no keyword placed</string>
     <string name="failure_unexpected_error">Something went wrong</string>
     <string name="failure_network_connection">No Network Connection.</string>
@@ -28,5 +28,6 @@
     <string name="playback_channel_name">Now Playing</string>
     <string name="channel_name">channelName</string>
     <string name="channel_description">ChannelDescription</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>

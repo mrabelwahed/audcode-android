@@ -19,7 +19,9 @@ class RegisterVM @Inject constructor(private val createUserUseCase: CreateUser) 
         val disposable = createUserUseCase.execute(userDTO)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { res -> userState.value = ServerDataState.Success(UserModelMapper.transform(res)) },
+                { res ->
+                    userState.value = ServerDataState.Success(UserModelMapper.transform(res))
+                },
                 { error -> userState.value = setFailure(error) })
         compositeDisposable.add(disposable)
 

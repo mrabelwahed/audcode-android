@@ -82,8 +82,6 @@ class AudioService : Service() {
     }
 
 
-
-
     inner class AudioServiceBinder : Binder() {
         fun getService(): AudioService = this@AudioService
     }
@@ -153,18 +151,18 @@ class AudioService : Service() {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_READY -> {
-                       // player?.playWhenReady?.let { isPlaying ->
-                            if (playWhenReady) {
-                                episodeModel?.let {
-                                    it.isPlaying = true
-                                    _playerStatusLiveData.value = PlayerState.Playing(it)
-                                }
-                            } else {// Paused
-                                episodeModel?.let {
-                                    it.isPlaying = false
-                                    _playerStatusLiveData.value = PlayerState.Paused(it)
-                                }
+                        // player?.playWhenReady?.let { isPlaying ->
+                        if (playWhenReady) {
+                            episodeModel?.let {
+                                it.isPlaying = true
+                                _playerStatusLiveData.value = PlayerState.Playing(it)
                             }
+                        } else {// Paused
+                            episodeModel?.let {
+                                it.isPlaying = false
+                                _playerStatusLiveData.value = PlayerState.Paused(it)
+                            }
+                        }
                         //}
                     }
                     Player.STATE_ENDED -> {
@@ -266,7 +264,10 @@ class AudioService : Service() {
         private const val PLAYBACK_NOTIFICATION_ID = 1
     }
 
-    private fun getBitmapFromVectorDrawable(context: Context, @DrawableRes drawableId: Int): Bitmap? {
+    private fun getBitmapFromVectorDrawable(
+        context: Context,
+        @DrawableRes drawableId: Int
+    ): Bitmap? {
         return ContextCompat.getDrawable(context, drawableId)?.let {
             val drawable = DrawableCompat.wrap(it).mutate()
 

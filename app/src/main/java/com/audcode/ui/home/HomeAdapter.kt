@@ -21,7 +21,7 @@ class HomeAdapter @Inject constructor() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent, false)
         return EpisodeViewHolder(view)
     }
 
@@ -45,8 +45,9 @@ class HomeAdapter @Inject constructor() :
     class EpisodeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val author: TextView = view.episodeAuthor
         val title: TextView = view.episodeTitle
+
         //val stack: TextView = view.episodeMainStack
-        val image:ImageView = view.episodeImage
+        val image: ImageView = view.episodeImage
         //val ratingCount:TextView = view.ratingCount
     }
 

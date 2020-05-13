@@ -8,47 +8,47 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-<!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
-<!--        &lt;!&ndash; Global color attributes &ndash;&gt;-->
-<!--        <item name="colorPrimary">@color/color_primary</item>-->
-<!--        <item name="colorPrimaryVariant">@color/color_primary_variant</item>-->
-<!--        <item name="colorOnPrimary">@color/color_on_primary</item>-->
+    <!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+    <!--        &lt;!&ndash; Global color attributes &ndash;&gt;-->
+    <!--        <item name="colorPrimary">@color/color_primary</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/color_primary_variant</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_on_primary</item>-->
 
-<!--        <item name="colorSecondary">@color/color_secondary</item>-->
-<!--        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>-->
-<!--        <item name="colorOnSecondary">@color/color_on_secondary</item>-->
+    <!--        <item name="colorSecondary">@color/color_secondary</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_on_secondary</item>-->
 
-<!--        <item name="colorError">@color/color_error</item>-->
-<!--        <item name="colorOnError">@color/color_on_error</item>-->
+    <!--        <item name="colorError">@color/color_error</item>-->
+    <!--        <item name="colorOnError">@color/color_on_error</item>-->
 
-<!--        <item name="colorSurface">@color/color_surface</item>-->
-<!--        <item name="colorOnSurface">@color/color_on_surface</item>-->
+    <!--        <item name="colorSurface">@color/color_surface</item>-->
+    <!--        <item name="colorOnSurface">@color/color_on_surface</item>-->
 
-<!--        <item name="android:colorBackground">@color/color_background</item>-->
-<!--        <item name="colorOnBackground">@color/color_on_background</item>-->
+    <!--        <item name="android:colorBackground">@color/color_background</item>-->
+    <!--        <item name="colorOnBackground">@color/color_on_background</item>-->
 
-<!--        <item name="android:statusBarColor">@color/color_status_bar</item>-->
+    <!--        <item name="android:statusBarColor">@color/color_status_bar</item>-->
 
-<!--        &lt;!&ndash; Other &ndash;&gt;-->
-<!--        <item name="windowActionModeOverlay">true</item>-->
-<!--    </style>-->
+    <!--        &lt;!&ndash; Other &ndash;&gt;-->
+    <!--        <item name="windowActionModeOverlay">true</item>-->
+    <!--    </style>-->
 
-<!--    <style name="Widget.SED.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar"/>-->
-<!--    <style name="Widget.SED.Toolbar.WithCloseButton" parent="Widget.SED.Toolbar">-->
-<!--        <item name="navigationContentDescription">@string/close</item>-->
-<!--        <item name="navigationIcon">@drawable/vd_close</item>-->
-<!--    </style>-->
+    <!--    <style name="Widget.SED.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar"/>-->
+    <!--    <style name="Widget.SED.Toolbar.WithCloseButton" parent="Widget.SED.Toolbar">-->
+    <!--        <item name="navigationContentDescription">@string/close</item>-->
+    <!--        <item name="navigationIcon">@drawable/vd_close</item>-->
+    <!--    </style>-->
 
-<!--    <style name="Widget.SED.AppBarLayout" parent="ThemeOverlay.AppCompat.Light"/>-->
+    <!--    <style name="Widget.SED.AppBarLayout" parent="ThemeOverlay.AppCompat.Light"/>-->
 
-    <style name="Widget.Audcode.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar"/>
+    <style name="Widget.Audcode.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
     <style name="Widget.Audcode.Toolbar.WithCloseButton" parent="Widget.Audcode.Toolbar">
         <item name="navigationContentDescription">@string/close</item>
         <item name="navigationIcon">@drawable/vd_close</item>
     </style>
 
-    <style name="Widget.Audcode.AppBarLayout" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="Widget.Audcode.AppBarLayout" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

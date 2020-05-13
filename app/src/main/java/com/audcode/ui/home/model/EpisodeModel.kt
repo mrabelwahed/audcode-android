@@ -5,13 +5,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class EpisodeModel(
-    val id:String,
+    val id: String,
     val name: String,
-    val createdAt:String,
-    val content:String?,
+    val createdAt: String,
+    val content: String?,
     val author: String,
     val tags: ArrayList<String>,
-    var isPlaying:Boolean = false,
-    var url:String =""
-):Parcelable
+    var isPlaying: Boolean = false,
+    var isSaved:Boolean = false,
+    var url: String = ""
+) : Parcelable
 

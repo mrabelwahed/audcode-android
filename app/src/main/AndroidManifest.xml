@@ -3,8 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.audcode">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
             android:name=".BaseApp"
             android:allowBackup="true"
@@ -17,14 +18,13 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.splash.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <service android:name=".audio.AudioService"
-                />
+        <service android:name=".audio.AudioService" />
     </application>
 
 </manifest>

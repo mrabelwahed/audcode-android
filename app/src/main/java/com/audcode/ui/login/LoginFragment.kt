@@ -11,7 +11,6 @@ import com.audcode.R
 import com.audcode.ui.*
 import com.audcode.ui.dto.UserDTO
 import com.audcode.ui.login.LoginVM
-import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.profile.ProfileFragment
 import com.audcode.ui.viewstate.ServerDataState
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -50,12 +49,12 @@ class LoginFragment : BaseFragment() {
             }
         }
 
-        loginVM.userViewState.observe(viewLifecycleOwner , Observer{
+        loginVM.userViewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ServerDataState.Success<*> -> {
                     val authToken = it.item as String
-                    getUserModel()?.let {
-                        userModel ->  userModel.authToken = authToken
+                    getUserModel()?.let { userModel ->
+                        userModel.authToken = authToken
                         saveUserModel(userModel)
                     }
                     handleUISuccess()

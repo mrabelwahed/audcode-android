@@ -1,9 +1,8 @@
 package com.audcode.di.module
 
 import com.audcode.AppConst.TIMEOUT_REQUEST
-import com.audcode.data.network.AuthInterceptor
 import com.audcode.data.network.AudcodeAPI
-
+import com.audcode.data.network.AuthInterceptor
 import com.audcode.di.scope.AppScope
 import dagger.Module
 import dagger.Provides
@@ -16,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 
 @Module
- open class NetworkModule(var baseUrl:String) {
+open class NetworkModule(private var baseUrl: String) {
     @AppScope
     @Provides
     fun provideHttpLogging(): HttpLoggingInterceptor {
@@ -27,12 +26,16 @@ import java.util.concurrent.TimeUnit
 
     @AppScope
     @Provides
-    fun provideAuthInterceptor():AuthInterceptor{
-        return  AuthInterceptor()
+    fun provideAuthInterceptor(): AuthInterceptor {
+        return AuthInterceptor()
     }
+
     @AppScope
     @Provides
-    fun provideOkhttpClient(interceptor: HttpLoggingInterceptor , authInterceptor: AuthInterceptor): OkHttpClient =
+    fun provideOkhttpClient(
+        interceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
             //.addInterceptor(authInterceptor)
             .addInterceptor(interceptor)
@@ -51,6 +54,6 @@ import java.util.concurrent.TimeUnit
 
     @AppScope
     @Provides
-     fun provideFeedService(builder: Retrofit.Builder) =
+    fun provideFeedService(builder: Retrofit.Builder) =
         builder.baseUrl(baseUrl).build().create(AudcodeAPI::class.java)
 }

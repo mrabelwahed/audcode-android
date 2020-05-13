@@ -11,8 +11,7 @@
             layout="@layout/main_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
@@ -23,9 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <include
-                layout="@layout/content_main" />
-
+        <include layout="@layout/content_main" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -42,7 +39,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/menu_main"
-            />
+            app:menu="@menu/menu_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

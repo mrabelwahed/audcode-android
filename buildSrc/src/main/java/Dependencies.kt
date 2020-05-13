@@ -1,8 +1,6 @@
 import Versions.EXO_PLAYER
-import Versions.GLIDE_VERSION
 import Versions.LIFE_CYCLE_VERSION
 import Versions.MOCK_HTTP_SERVER
-import Versions.NAV_VERSION
 
 object Versions {
     val KOTLIN = "1.3.20"
@@ -34,12 +32,12 @@ object Versions {
     val RULES_VER = "1.1.1"
     val TRUTH_VER = "1.1.0"
     val JUNIT_EXT_VER = "1.1.0"
-    val MATERIAL_VERSION ="1.0.0"
-    val MOCKITO ="3.3.1"
-    val MOCK_HTTP_SERVER ="2.7.5"
+    val MATERIAL_VERSION = "1.0.0"
+    val MOCKITO = "3.3.1"
+    val MOCK_HTTP_SERVER = "2.7.5"
     val RX_IDLER = "0.10.0"
     val NAV_VERSION = "2.3.0-alpha03"
-    val EXO_PLAYER ="1.0.0"
+    val EXO_PLAYER = "1.0.0"
 }
 
 object BuildPlugins {
@@ -67,38 +65,42 @@ object Libs {
     val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.GSON_CONVERTER}"
     val dagger = "com.google.dagger:dagger:${Versions.DAGGER_VERSION}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.DAGGER_COMPILER}"
-    val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING_INTERCEPTOR_VERSION}"
+    val loggingInterceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING_INTERCEPTOR_VERSION}"
     val recyclerview = "androidx.recyclerview:recyclerview:${Versions.RECYCLERVIEW_VERSION}"
     val cardview = "androidx.cardview:cardview:${Versions.CARD_VIEW_VERSION}"
-    val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
+    val constraintLayout =
+        "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
     val liveData = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFE_CYCLE_VERSION}"
     val viewModel = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFE_CYCLE_VERSION}"
-    val glide =  "com.github.bumptech.glide:glide:${Versions.GLIDE_VERSION}"
-    val glideCompiler =  "com.github.bumptech.glide:compiler:${Versions.GLIDE_VERSION}"
+    val glide = "com.github.bumptech.glide:glide:${Versions.GLIDE_VERSION}"
+    val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.GLIDE_VERSION}"
     val appCompat = "androidx.appcompat:appcompat:${Versions.APP_COMPAT_VERSION}"
     val coreExt = "androidx.core:core-ktx:${Versions.CORE_KTX}"
     // Java language implementation
 
 
-    val lifecycleExt =  "androidx.lifecycle:lifecycle-extensions:$LIFE_CYCLE_VERSION"
+    val lifecycleExt = "androidx.lifecycle:lifecycle-extensions:$LIFE_CYCLE_VERSION"
+
     // Audio
     val exoCore = "com.google.android.exoplayer:exoplayer-core:$EXO_PLAYER"
-    val exoUI =  "com.google.android.exoplayer:exoplayer-ui:$EXO_PLAYER"
-    val exoMedia =  "com.google.android.exoplayer:extension-mediasession:$EXO_PLAYER"
+    val exoUI = "com.google.android.exoplayer:exoplayer-ui:$EXO_PLAYER"
+    val exoMedia = "com.google.android.exoplayer:extension-mediasession:$EXO_PLAYER"
 }
 
 object TestLibs {
     val junit = "junit:junit:4.12"
     val espressoCore = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO_VERSION}"
     val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.ESPRESSO_VERSION}"
-    val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.ESPRESSO_VERSION}"
+    val espressoIdlingResource =
+        "androidx.test.espresso:espresso-idling-resource:${Versions.ESPRESSO_VERSION}"
     val archCoreTesting = "androidx.arch.core:core-testing:${Versions.ARCH_CORE_TESTING_VER}"
     val testRunner = "com.android.support.test:runner:${Versions.TEST_RUNNER_VER}"
     val rules = "androidx.test:rules:${Versions.RULES_VER}"
     val truth = "androidx.test.ext:truth:${Versions.TRUTH_VER}"
     val junitExt = "androidx.test.ext:junit:${Versions.JUNIT_EXT_VER}"
-    val mockito =  "org.mockito:mockito-core:${Versions.MOCKITO}"
-    val mockitoAndroid="org.mockito:mockito-android:${Versions.MOCKITO}"
+    val mockito = "org.mockito:mockito-core:${Versions.MOCKITO}"
+    val mockitoAndroid = "org.mockito:mockito-android:${Versions.MOCKITO}"
     val mockHttpServer = "com.squareup.okhttp:mockwebserver:$MOCK_HTTP_SERVER"
-    val rxIdler ="com.squareup.rx.idler:rx2-idler:${Versions.RX_IDLER}"
+    val rxIdler = "com.squareup.rx.idler:rx2-idler:${Versions.RX_IDLER}"
 }

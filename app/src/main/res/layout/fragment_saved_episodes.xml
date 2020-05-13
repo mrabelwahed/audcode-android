@@ -2,15 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        >
+        android:padding="16dp"
+        android:background="#E8E8E8"
+        android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/savedEpisodesRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
 
     <TextView
+            android:id="@+id/emptyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="saved episodes"
-            android:textSize="30sp" />
+            android:text="No saved episodes"
+            android:layout_gravity="center"
+            android:textSize="20sp" />
 
 </LinearLayout>

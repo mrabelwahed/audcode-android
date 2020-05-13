@@ -11,7 +11,7 @@ android {
         minSdkVersion Android.minSDK
         targetSdkVersion Android.targetSDK
         versionCode Android.versionCode
-        versionName  Android.versionName
+        versionName Android.versionName
         testInstrumentationRunner 'com.audcode.runner.MockRunner'
         multiDexEnabled true
 
@@ -73,7 +73,7 @@ dependencies {
     implementation Libs.constraintLayout
     //RxJava
     implementation Libs.rxVersion
-    implementation  Libs.rxAndroid
+    implementation Libs.rxAndroid
     implementation Libs.rxAdapter
     //Retrofit
     implementation Libs.retrofit
@@ -104,4 +104,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

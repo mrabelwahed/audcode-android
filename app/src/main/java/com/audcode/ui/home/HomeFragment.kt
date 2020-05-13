@@ -1,10 +1,9 @@
 package com.audcode.ui.home
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.audcode.R
@@ -21,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.content_empty.*
 import kotlinx.android.synthetic.main.content_error.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.util.concurrent.TimeUnit
 
 class HomeFragment : BaseFragment(), OnClickListener {
@@ -36,33 +36,30 @@ class HomeFragment : BaseFragment(), OnClickListener {
     var isOpenAgain = false
 
 
-
-
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //homeVM.setNewQuery(homeVM.lastQuery)
         initUI()
-
-            RxTextView.textChanges(searchInput)
-                .filter { text -> text.length >= 3 || text.isEmpty() }
-                .debounce(250, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (!isOpenAgain){
-                        if (it.isEmpty()) {
-                            homeVM.setNewQuery(null)
-                            homeVM.loadNextPage()
-                        } else {
-                            homeVM.setNewQuery(it.toString())
-                            homeVM.loadNextPage()
-                        }
-                        newQueryIsFired = true
-                        homeAdapter.clearAll()
-                        shimmerView.visibility = View.VISIBLE
-                        shimmerView.startShimmer()
+        RxTextView.textChanges(searchInput)
+            .filter { text -> text.length >= 3 || text.isEmpty() }
+            .debounce(250, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (!isOpenAgain) {
+                    if (it.isEmpty()) {
+                        homeVM.setNewQuery(null)
+                        homeVM.loadNextPage()
+                    } else {
+                        homeVM.setNewQuery(it.toString())
+                        homeVM.loadNextPage()
                     }
-                    isOpenAgain = false
+                    newQueryIsFired = true
+                    homeAdapter.clearAll()
+                    shimmerView.visibility = View.VISIBLE
+                    shimmerView.startShimmer()
                 }
+                isOpenAgain = false
+            }
 
 
     }
@@ -157,7 +154,7 @@ class HomeFragment : BaseFragment(), OnClickListener {
                 }
                 is Failure.ServerError -> {
                     errorText.text = getString(R.string.failure_server_error)
-                    errorImage.setImageResource(R.drawable.undraw_page_not_found_su7k)
+                    errorImage.setImageResource(R.drawable.undraw_server_down_s4lk)
 
                 }
                 is Failure.UnExpectedError -> {
@@ -188,7 +185,6 @@ class HomeFragment : BaseFragment(), OnClickListener {
 
     }
 
-
     override fun onClick(position: Int, view: View) {
         isOpenAgain = true
         val bundle = Bundle()
@@ -199,8 +195,12 @@ class HomeFragment : BaseFragment(), OnClickListener {
             R.id.container,
             episodeDetailsFragment
         ).addToBackStack("episode_details_transaction").commit()
-
     }
 
+    override fun onResume() {
+        super.onResume()
+        toolBar.visibility = View.GONE
+
+    }
 
 }

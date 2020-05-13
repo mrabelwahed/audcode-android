@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.AppConst
+import com.audcode.AppConst.Keys.EPISODES
 import com.audcode.AppConst.Keys.USER_MODEL
 import com.audcode.R
 import com.audcode.audio.PlayerState
@@ -22,12 +23,15 @@ import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.view_bottom_player.*
+import java.lang.reflect.Type
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
     lateinit var homeVM: HomeVM
 
+    private var inMemoryEpisodes = arrayListOf<EpisodeModel>()
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -36,6 +40,7 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+       getSavedEpisodes()?.let { inMemoryEpisodes = it }
         return inflater.inflate(getLayoutById(), container, false)
     }
 
@@ -56,23 +61,22 @@ abstract class BaseFragment : Fragment() {
             viewLifecycleOwner,
             androidx.lifecycle.Observer { playerStatus ->
 
-                if (this is EpisodeDetailsFragment){
-                    if (playerStatus is PlayerState.Playing){
+                if (this is EpisodeDetailsFragment) {
+                    if (playerStatus is PlayerState.Playing) {
+                        setLastPlayedEpisode(playerStatus.episode)
+                        handleNotificationAction(playerStatus.episode)
+                        handleBottomPlayerFromNotification(playerStatus.episode)
+                    } else if (playerStatus is PlayerState.Paused) {
                         setLastPlayedEpisode(playerStatus.episode)
                         handleNotificationAction(playerStatus.episode)
                         handleBottomPlayerFromNotification(playerStatus.episode)
                     }
-                    else if (playerStatus is PlayerState.Paused){
-                        setLastPlayedEpisode(playerStatus.episode)
-                        handleNotificationAction(playerStatus.episode)
-                        handleBottomPlayerFromNotification(playerStatus.episode)
-                    }
-                }else if (this is HomeFragment){
-                    if (playerStatus is PlayerState.Playing){
+                } else if (this is HomeFragment) {
+                    if (playerStatus is PlayerState.Playing) {
                         setLastPlayedEpisode(playerStatus.episode)
                         handleBottomPlayerFromNotification(playerStatus.episode)
 
-                    }else if(playerStatus is PlayerState.Paused){
+                    } else if (playerStatus is PlayerState.Paused) {
                         setLastPlayedEpisode(playerStatus.episode)
                         handleBottomPlayerFromNotification(playerStatus.episode)
                     }
@@ -81,9 +85,25 @@ abstract class BaseFragment : Fragment() {
                 Log.e("status", playerStatus.toString())
             })
 
+        holderActivity.bottomSaveButton.setOnClickListener {
+            getLastPlayedEpisode()?.let {
+                if (it.isSaved){
+                    holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
+                    it.isSaved = false
+                    removeEpisode(it)
+                }else{
+                    it.isSaved = true
+                    holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
+                    addEpisode(it)
+                }
+                setLastPlayedEpisode(it)
+            }
+
+        }
     }
 
-   private  fun handleBottomPlayerFromNotification(episode: EpisodeModel){
+
+    private fun handleBottomPlayerFromNotification(episode: EpisodeModel) {
         if (episode.isPlaying)
             holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
         else
@@ -143,8 +163,12 @@ abstract class BaseFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        holderActivity.playingEpisode?.let { setLastPlayedEpisode(it) }
-
+        holderActivity.playingEpisode?.let {
+            val episode = findEpisodeById(it.id)
+            it.isSaved = episode.isSaved
+            setLastPlayedEpisode(it)
+        }
+        saveEpisodes(inMemoryEpisodes)
     }
 
     override fun onResume() {
@@ -164,26 +188,84 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-     fun saveUserModel(userModel: UserModel) {
+    fun saveUserModel(userModel: UserModel) {
         val gson = Gson()
         val modelStr = gson.toJson(userModel)
         val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
             MainActivity.PREF_NAME,
             MainActivity.PRIVATE_MODE
         )
-        sharedPref.edit().putString(AppConst.Keys.USER_MODEL,modelStr).commit()
+        sharedPref.edit().putString(AppConst.Keys.USER_MODEL, modelStr).commit()
     }
 
-     fun getUserModel():UserModel?{
+    fun getUserModel(): UserModel? {
         val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(
             MainActivity.PREF_NAME,
             MainActivity.PRIVATE_MODE
         )
-        val modelStr = sharedPref.getString(USER_MODEL,null)
+        val modelStr = sharedPref.getString(USER_MODEL, null)
         if (modelStr.isNullOrEmpty())
             return null
-        return Gson().fromJson(modelStr , UserModel::class.java)
+        return Gson().fromJson(modelStr, UserModel::class.java)
     }
 
 
+    fun saveEpisodes(episodes: ArrayList<EpisodeModel>) {
+            removeKeyFromSharedPref(EPISODES)
+            val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+            val episodesStr = Gson().toJson(episodes)
+            sharedPref.edit().putString(EPISODES, episodesStr).commit()
+    }
+
+    fun getSavedEpisodes(): ArrayList<EpisodeModel>? {
+        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+        val episodesStr = sharedPref.getString(EPISODES, null)
+        if (episodesStr.isNullOrEmpty())
+            return null
+        val type: Type = object : TypeToken<List<EpisodeModel?>?>() {}.type
+        return Gson().fromJson(episodesStr, type)
+    }
+
+//    fun removeEpisode(episode: EpisodeModel){
+//        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+//        var savedEpisodes = mutableListOf<EpisodeModel>()
+//        getSavedEpisodes()?.let {
+//            savedEpisodes = it
+//        }
+//        savedEpisodes.remove(episode)
+//        val gson = Gson()
+//        val episodesStr = gson.toJson(savedEpisodes)
+//        sharedPref.edit().putString(EPISODES, episodesStr).commit()
+//    }
+
+    fun addEpisode(episodeModel: EpisodeModel){
+        inMemoryEpisodes.add(episodeModel)
+    }
+
+    fun removeEpisode(episodeModel: EpisodeModel){
+        val ite = inMemoryEpisodes.iterator()
+        while(ite.hasNext())
+            if(ite.next().id == episodeModel.id)
+                ite.remove()
+
+    }
+    fun findEpisodeById(id:String) : EpisodeModel{
+        var index =0
+        for(item in inMemoryEpisodes)
+            if (item.id == id){
+                index =  inMemoryEpisodes.indexOf(item)
+                break
+            }
+
+        return inMemoryEpisodes[index]
+    }
+
+
+
+    fun loadSavedEpisodes() = inMemoryEpisodes
+
+    fun removeKeyFromSharedPref(key :String){
+        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+        sharedPref.edit().remove(key).commit()
+    }
 }

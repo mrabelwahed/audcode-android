@@ -7,8 +7,8 @@ import org.mockito.Mockito
 import retrofit2.Retrofit
 
 @Module
-class TestNetworkModule(baseUrl:String) :NetworkModule(baseUrl){
+class TestNetworkModule(baseUrl: String) : NetworkModule(baseUrl) {
     @Provides
-     fun providService(builder: Retrofit.Builder) = Mockito.mock(GifAPI::class.java)
+    fun providService(builder: Retrofit.Builder) = Mockito.mock(GifAPI::class.java)
 
 }

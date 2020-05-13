@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:cardCornerRadius="10dp"
-        >
+        app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,8 +20,7 @@
                 android:layout_marginRight="@dimen/spacing_large"
                 android:background="@color/placeholder_bg"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
         <View
                 android:id="@+id/shimmerName"
@@ -34,8 +30,7 @@
                 android:background="@color/placeholder_bg"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintStart_toEndOf="@id/shimmerImage"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
         <View
                 android:layout_width="0dp"
@@ -45,8 +40,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="@dimen/spacing_medium"
                 app:layout_constraintStart_toEndOf="@id/shimmerImage"
-                app:layout_constraintTop_toBottomOf="@+id/shimmerName"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/shimmerName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

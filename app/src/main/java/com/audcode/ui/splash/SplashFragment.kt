@@ -2,13 +2,11 @@ package com.audcode.ui.splash
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Lifecycle
 import com.audcode.R
 import com.audcode.ui.BaseFragment
 import com.audcode.ui.bottomNavigation
 import com.audcode.ui.bottomPlayer
 import com.audcode.ui.home.HomeFragment
-import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.toolBar
 
 class SplashFragment : BaseFragment() {
@@ -33,7 +31,6 @@ class SplashFragment : BaseFragment() {
         bottomNavigation.visibility = View.GONE
         bottomPlayer.visibility = View.GONE
     }
-
 
 
 }

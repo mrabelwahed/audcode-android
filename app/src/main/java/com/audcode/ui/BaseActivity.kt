@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.audcode.R
 
 
-abstract  class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
 
-    abstract  fun getLayoutById(): Int
+    abstract fun getLayoutById(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,7 @@ abstract  class BaseActivity : AppCompatActivity() {
         initUI()
     }
 
-      fun loadFragment(fragment: Fragment) {
+    fun loadFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()

@@ -1,20 +1,15 @@
 package com.audcode.ui.episode_details
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.lifecycle.ViewModelProvider
 import com.audcode.R
-import com.audcode.audio.PlayerState
 import com.audcode.ui.*
-import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.google.android.material.chip.Chip
@@ -32,7 +27,6 @@ class EpisodeDetailsFragment : BaseFragment() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -42,9 +36,14 @@ class EpisodeDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //change icon of fab to play if the episide is running and selected episode is this
-        getLastPlayedEpisode()?.let { episode -> notifyPlayFabButton(episode)}
-        homeVM.lastLiveEpisode.observe(viewLifecycleOwner, androidx.lifecycle.Observer { notifyPlayFabButton(it) })
+        //change icon of fab to play if the episode is running and selected episode is this
+        getLastPlayedEpisode()?.let { episode ->
+            notifyPlayFabButton(episode)
+            notifyBookMark(episode)
+        }
+        homeVM.lastLiveEpisode.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { notifyPlayFabButton(it) })
         episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
         renderTags(selectedEpisode)
@@ -54,11 +53,14 @@ class EpisodeDetailsFragment : BaseFragment() {
 
     }
 
+    private fun notifyBookMark(episode: EpisodeModel) {
+    }
+
 
     private fun handleFabPlayButton() {
         playButton.setOnClickListener {
-            getLastPlayedEpisode()?.let {episode ->
-              isPlaying = episode.isPlaying
+            getLastPlayedEpisode()?.let { episode ->
+                isPlaying = episode.isPlaying
             }
             if (isPlaying) {
                 selectedEpisode.isPlaying = false
@@ -91,11 +93,11 @@ class EpisodeDetailsFragment : BaseFragment() {
     }
 
 
-     fun notifyPlayFabButton(episode: EpisodeModel) {
-            if (episode.isPlaying && episode.id == selectedEpisode.id)
-                   playButton.setImageResource(R.drawable.ic_pause_24px)
-            else
-                playButton.setImageResource(R.drawable.vd_play_arrow)
+    fun notifyPlayFabButton(episode: EpisodeModel) {
+        if (episode.isPlaying && episode.id == selectedEpisode.id)
+            playButton.setImageResource(R.drawable.ic_pause_24px)
+        else
+            playButton.setImageResource(R.drawable.vd_play_arrow)
     }
 
 
@@ -105,7 +107,6 @@ class EpisodeDetailsFragment : BaseFragment() {
         else
             playButton.setImageResource(R.drawable.vd_play_arrow)
     }
-
 
 
     fun formatDate(dateStr: String): String {

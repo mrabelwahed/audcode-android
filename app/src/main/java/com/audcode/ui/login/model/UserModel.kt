@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 data class UserModel(
     val id: String,
     val email: String,
-    var authToken : String? = null
+    var authToken: String? = null
 ) : Parcelable

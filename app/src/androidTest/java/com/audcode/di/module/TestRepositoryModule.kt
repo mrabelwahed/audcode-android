@@ -7,7 +7,7 @@ import dagger.Provides
 import org.mockito.Mockito.mock
 
 @Module
-class TestRepositoryModule  :RepositoryModule(){
+class TestRepositoryModule : RepositoryModule() {
     @Provides
-     fun provideRepository(api: GifAPI) = EpisodeDataRepository(mock(GifAPI::class.java))
+    fun provideRepository(api: GifAPI) = EpisodeDataRepository(mock(GifAPI::class.java))
 }

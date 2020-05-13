@@ -56,6 +56,7 @@
                             app:layout_constraintStart_toStartOf="@+id/episodeTitleTextView"
                             app:layout_constraintTop_toBottomOf="@+id/episodeTitleTextView"
                             android:src="@drawable/me" />
+
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/followButton"
                             style="@style/Widget.MaterialComponents.Button.Icon"
@@ -68,6 +69,7 @@
                             app:cornerRadius="48dp"
                             app:layout_constraintLeft_toRightOf="@+id/guestImageView"
                             app:layout_constraintTop_toTopOf="@+id/guestImageView" />
+
                     <TextView
                             android:id="@+id/dateTextView"
                             android:layout_width="wrap_content"
@@ -93,11 +95,6 @@
                             app:layout_constraintBottom_toBottomOf="@+id/guestImageView"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/guestImageView" />
-
-
-
-
-
 
 
                     <com.google.android.material.button.MaterialButton
@@ -204,23 +201,23 @@
                     app:contentPadding="0dp"
                     tools:visibility="visible">
 
-                                <com.koalatea.sedaily.ui.widget.HackyWebView
-                                        android:id="@+id/contentWebView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="@dimen/first_keyline"
-                                        android:layout_marginTop="8dp"
-                                        android:layout_marginBottom="50dp"
-                                        android:layout_marginEnd="@dimen/first_keyline" />
+                <com.koalatea.sedaily.ui.widget.HackyWebView
+                        android:id="@+id/contentWebView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/first_keyline"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="50dp"
+                        android:layout_marginEnd="@dimen/first_keyline" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
 
     <!--    <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center" />-->
+    <!--            android:id="@+id/progressBar"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center" />-->
 
 </FrameLayout>

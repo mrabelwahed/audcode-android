@@ -9,7 +9,7 @@ import org.mockito.Mockito.mock
 @Module
 class TestGifyUsecaseModule : AudcodeUseCase() {
     @Provides
-     fun provideUseCase(repository: EpisodeDataRepository) =
+    fun provideUseCase(repository: EpisodeDataRepository) =
         GetEpisodes(mock(EpisodeDataRepository::class.java))
 
 }

@@ -18,9 +18,10 @@ object AppConst {
         const val SERVICE_ACTION = "service_action"
         const val WITH_STOP_ACTION: String = "with_stop_action"
         const val USER_KEY = "user_key"
-        const val USER_EMAIL ="user_email"
-        const val  USER_PASSWORD = "user_password"
-        const val USER_MODEL ="user_model"
+        const val USER_EMAIL = "user_email"
+        const val USER_PASSWORD = "user_password"
+        const val USER_MODEL = "user_model"
+        const val EPISODES ="episodes"
     }
 
 

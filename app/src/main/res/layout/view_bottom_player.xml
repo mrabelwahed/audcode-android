@@ -1,6 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/lastPlayedLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,8 +14,7 @@
             android:padding="5dp"
             android:src="@drawable/rxjava"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/lastPlayedEpisodeTitle"
@@ -30,8 +28,7 @@
             app:layout_constraintTop_toTopOf="@id/image"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintBottom_toBottomOf="@+id/image"
-            app:layout_constraintEnd_toStartOf="@+id/bottomSaveButton"
-            />
+            app:layout_constraintEnd_toStartOf="@+id/bottomSaveButton" />
 
     <ImageButton
             android:id="@+id/bottomSaveButton"
@@ -42,8 +39,7 @@
             android:layout_marginRight="10dp"
             app:layout_constraintRight_toLeftOf="@+id/bottomPlayerButton"
             app:layout_constraintTop_toTopOf="@+id/bottomPlayerButton"
-            app:layout_constraintBottom_toBottomOf="@+id/bottomPlayerButton"
-            />
+            app:layout_constraintBottom_toBottomOf="@+id/bottomPlayerButton" />
 
     <ImageButton
             android:id="@+id/bottomPlayerButton"
@@ -53,8 +49,7 @@
             android:src="@drawable/ic_play_arrow_24px"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

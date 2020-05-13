@@ -18,14 +18,13 @@ abstract class BaseNetwrokTest {
     }
 
 
-
     fun stopMockServer() {
         if (isMockServerEnable())
             mockServer.shutdown()
     }
 
     @Before
-    open fun setup(){
+    open fun setup() {
         startMockServer()
     }
 

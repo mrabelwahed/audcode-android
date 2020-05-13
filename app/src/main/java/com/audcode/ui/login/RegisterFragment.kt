@@ -1,7 +1,6 @@
 package com.ramadan.login
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.audcode.AppConst.Keys.USER_EMAIL
 import com.audcode.AppConst.Keys.USER_KEY
-import com.audcode.AppConst.Keys.USER_MODEL
 import com.audcode.AppConst.Keys.USER_PASSWORD
 import com.audcode.R
 import com.audcode.data.exceptions.Failure
@@ -18,11 +16,12 @@ import com.audcode.ui.dto.UserDTO
 import com.audcode.ui.login.RegisterVM
 import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.profile.ProfileFragment
-import com.audcode.ui.splash.MainActivity.Companion.PREF_NAME
-import com.audcode.ui.splash.MainActivity.Companion.PRIVATE_MODE
 import com.audcode.ui.viewstate.ServerDataState
-import com.google.gson.Gson
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.content_error.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import retrofit2.HttpException
+import java.net.UnknownHostException
 
 class RegisterFragment : BaseFragment() {
 
@@ -42,7 +41,7 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signInText.setOnClickListener {
-            holderActivity.onBackPressed()
+            holderActivity.loadFragment(LoginFragment())
         }
 
         createAccountFab.setOnClickListener {
@@ -62,8 +61,7 @@ class RegisterFragment : BaseFragment() {
                 }
 
                 is ServerDataState.Error -> {
-                    handleUIError()
-                    setError(it.failure)
+                    handleUIError(it.failure)
                 }
 
                 is ServerDataState.Loading -> {
@@ -72,7 +70,6 @@ class RegisterFragment : BaseFragment() {
             }
         })
     }
-
 
 
     private fun handleUISuccess() {
@@ -89,11 +86,24 @@ class RegisterFragment : BaseFragment() {
         holderActivity.loadFragment(profileFragment)
     }
 
-    private fun setError(failure: Failure?) {
 
-    }
 
-    private fun handleUIError() {
+    private fun handleUIError(failure: Failure?) {
+        var message =""
+            failure?.let {
+                message = when (it) {
+                    is Failure.NetworkConnection ->
+                        getString(R.string.failure_network_connection)
+
+                    is Failure.ServerError ->
+                        it.message
+
+                    is Failure.UnExpectedError ->
+                        getString(R.string.failure_unexpected_error)
+                }
+            }
+
+        Snackbar.make(rootView,message,Snackbar.LENGTH_SHORT).show()
     }
 
     private fun handleUILoading() {

@@ -46,13 +46,10 @@ class MainActivity : BaseActivity() {
 
 
     override fun initUI() {
-       bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, SplashFragment()).commit()
     }
-
-
-
 
 
     override fun onStart() {
@@ -70,24 +67,23 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-    fun play(episodeModel: EpisodeModel){
+    fun play(episodeModel: EpisodeModel) {
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
-            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE,episodeModel)
-            bundle.putString(AppConst.Keys.SERVICE_ACTION,PLAY)
-            intent.putExtra(AppConst.Keys.BUNDLE_KEY,bundle)
-            Util.startForegroundService(this,intent)
+            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE, episodeModel)
+            bundle.putString(AppConst.Keys.SERVICE_ACTION, PLAY)
+            intent.putExtra(AppConst.Keys.BUNDLE_KEY, bundle)
+            Util.startForegroundService(this, intent)
         }
     }
 
-    fun pause(episodeModel: EpisodeModel , withStop:Boolean = false){
+    fun pause(episodeModel: EpisodeModel, withStop: Boolean = false) {
         Intent(this, AudioService::class.java).also { intent ->
             val bundle = Bundle()
-            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE,episodeModel)
-            bundle.putString(AppConst.Keys.SERVICE_ACTION,PAUSE)
-            intent.putExtra(AppConst.Keys.BUNDLE_KEY,bundle)
-            Util.startForegroundService(this,intent)
+            bundle.putParcelable(AppConst.Keys.SERVICE_EPISODE, episodeModel)
+            bundle.putString(AppConst.Keys.SERVICE_ACTION, PAUSE)
+            intent.putExtra(AppConst.Keys.BUNDLE_KEY, bundle)
+            Util.startForegroundService(this, intent)
         }
         if (withStop)
             stopAudioService()
@@ -105,13 +101,13 @@ class MainActivity : BaseActivity() {
             override fun onNavigationItemSelected(@NonNull item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.action_home -> {
-                         loadFragment(HomeFragment())
+                        loadFragment(HomeFragment())
                         return true
                     }
-//                    R.id.action_lib -> {
-//                         loadFragment(LibraryFragment())
-//                        return true
-//                    }
+                    R.id.action_lib -> {
+                        loadFragment(LibraryFragment())
+                        return true
+                    }
 
                     R.id.action_profile -> {
                         loadFragment(ProfileFragment())
@@ -135,10 +131,9 @@ class MainActivity : BaseActivity() {
         if (R.id.action_home != selectedItem) {
             bottomNavigationView.selectedItemId = R.id.action_home
         } else {
-           super.onBackPressed()
+            super.onBackPressed()
         }
     }
-
 
 
 }

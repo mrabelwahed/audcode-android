@@ -63,9 +63,9 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <include  layout="@layout/content_empty"/>
-    <include  layout="@layout/content_error"/>
+    <include layout="@layout/content_empty" />
 
+    <include layout="@layout/content_error" />
 
 
 </LinearLayout>
