@@ -32,6 +32,7 @@ abstract class BaseFragment : Fragment() {
     lateinit var homeVM: HomeVM
 
     private var inMemoryEpisodes = arrayListOf<EpisodeModel>()
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -40,7 +41,7 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       getSavedEpisodes()?.let { inMemoryEpisodes = it }
+        getSavedEpisodes()?.let { inMemoryEpisodes = it }
         return inflater.inflate(getLayoutById(), container, false)
     }
 
@@ -86,19 +87,33 @@ abstract class BaseFragment : Fragment() {
             })
 
         holderActivity.bottomSaveButton.setOnClickListener {
-            getLastPlayedEpisode()?.let {
-                if (it.isSaved){
-                    holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
-                    it.isSaved = false
-                    removeEpisode(it)
-                }else{
-                    it.isSaved = true
-                    holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
-                    addEpisode(it)
-                }
-                setLastPlayedEpisode(it)
-            }
+            handleSavedClickButton()
+        }
+        handleSavedEpisodeInBottomPlayer()
+    }
 
+    fun handleSavedEpisodeInBottomPlayer() {
+        getLastPlayedEpisode()?.let { episode ->
+            if (episode.isSaved)
+                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
+            else
+                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
+        }
+    }
+
+
+    fun handleSavedClickButton() {
+        getLastPlayedEpisode()?.let {
+            if (it.isSaved) {
+                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
+                it.isSaved = false
+                removeEpisode(it)
+            } else {
+                it.isSaved = true
+                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
+                addEpisode(it)
+            }
+            setLastPlayedEpisode(it)
         }
     }
 
@@ -108,6 +123,7 @@ abstract class BaseFragment : Fragment() {
             holderActivity.bottomPlayerButton.setImageResource(R.drawable.ic_pause_32px)
         else
             holderActivity.bottomPlayerButton.setImageResource((R.drawable.ic_play_arrow_24px))
+
     }
 
 
@@ -165,8 +181,10 @@ abstract class BaseFragment : Fragment() {
         super.onPause()
         holderActivity.playingEpisode?.let {
             val episode = findEpisodeById(it.id)
-            it.isSaved = episode.isSaved
-            setLastPlayedEpisode(it)
+            episode?.let { episode->
+                it.isSaved = episode.isSaved
+                setLastPlayedEpisode(it)
+            }
         }
         saveEpisodes(inMemoryEpisodes)
     }
@@ -211,14 +229,16 @@ abstract class BaseFragment : Fragment() {
 
 
     fun saveEpisodes(episodes: ArrayList<EpisodeModel>) {
-            removeKeyFromSharedPref(EPISODES)
-            val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
-            val episodesStr = Gson().toJson(episodes)
-            sharedPref.edit().putString(EPISODES, episodesStr).commit()
+        removeKeyFromSharedPref(EPISODES)
+        val sharedPref: SharedPreferences =
+            holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+        val episodesStr = Gson().toJson(episodes)
+        sharedPref.edit().putString(EPISODES, episodesStr).commit()
     }
 
     fun getSavedEpisodes(): ArrayList<EpisodeModel>? {
-        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+        val sharedPref: SharedPreferences =
+            holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
         val episodesStr = sharedPref.getString(EPISODES, null)
         if (episodesStr.isNullOrEmpty())
             return null
@@ -226,46 +246,37 @@ abstract class BaseFragment : Fragment() {
         return Gson().fromJson(episodesStr, type)
     }
 
-//    fun removeEpisode(episode: EpisodeModel){
-//        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
-//        var savedEpisodes = mutableListOf<EpisodeModel>()
-//        getSavedEpisodes()?.let {
-//            savedEpisodes = it
-//        }
-//        savedEpisodes.remove(episode)
-//        val gson = Gson()
-//        val episodesStr = gson.toJson(savedEpisodes)
-//        sharedPref.edit().putString(EPISODES, episodesStr).commit()
-//    }
 
-    fun addEpisode(episodeModel: EpisodeModel){
+    fun addEpisode(episodeModel: EpisodeModel) {
         inMemoryEpisodes.add(episodeModel)
     }
 
-    fun removeEpisode(episodeModel: EpisodeModel){
+    fun removeEpisode(episodeModel: EpisodeModel) {
         val ite = inMemoryEpisodes.iterator()
-        while(ite.hasNext())
-            if(ite.next().id == episodeModel.id)
+        while (ite.hasNext())
+            if (ite.next().id == episodeModel.id)
                 ite.remove()
 
     }
-    fun findEpisodeById(id:String) : EpisodeModel{
-        var index =0
-        for(item in inMemoryEpisodes)
-            if (item.id == id){
-                index =  inMemoryEpisodes.indexOf(item)
+
+    fun findEpisodeById(id: String): EpisodeModel? {
+        var index = 0
+        for (item in inMemoryEpisodes)
+            if (item.id == id) {
+                index = inMemoryEpisodes.indexOf(item)
                 break
             }
-
-        return inMemoryEpisodes[index]
+        if (inMemoryEpisodes.size > 0)
+            return inMemoryEpisodes[index]
+        return null
     }
-
 
 
     fun loadSavedEpisodes() = inMemoryEpisodes
 
-    fun removeKeyFromSharedPref(key :String){
-        val sharedPref: SharedPreferences = holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
+    fun removeKeyFromSharedPref(key: String) {
+        val sharedPref: SharedPreferences =
+            holderActivity.getSharedPreferences(MainActivity.PREF_NAME, MainActivity.PRIVATE_MODE)
         sharedPref.edit().remove(key).commit()
     }
 }

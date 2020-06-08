@@ -36,24 +36,59 @@ class EpisodeDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolBar.visibility = View.VISIBLE
+        toolBar.title = selectedEpisode.name
+        holderActivity.setSupportActionBar(toolBar)
+        // add back arrow to toolbar
+        if (holderActivity.supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            supportActionBar?.setDisplayShowHomeEnabled(true);
+        }
+        toolBar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_ios_24px)
+        toolBar.setNavigationOnClickListener(View.OnClickListener {
+            // back button pressed
+            holderActivity.onBackPressed()
+        })
+
         //change icon of fab to play if the episode is running and selected episode is this
         getLastPlayedEpisode()?.let { episode ->
             notifyPlayFabButton(episode)
-            notifyBookMark(episode)
         }
+        notifyBookMark(selectedEpisode)
         homeVM.lastLiveEpisode.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { notifyPlayFabButton(it) })
-        episodeTitleTextView.text = selectedEpisode.name
+        //episodeTitleTextView.text = selectedEpisode.name
         dateTextView.text = formatDate(selectedEpisode.createdAt)
         renderTags(selectedEpisode)
         renderContent(selectedEpisode)
         observeLastPlayingEpisode()
         handleFabPlayButton()
+        bookmarkButton.setOnClickListener {
+            if (selectedEpisode.isSaved) {
+                bookmarkButton.setIconResource(R.drawable.ic_turned_in_not_24px)
+                selectedEpisode.isSaved = false
+                removeEpisode(selectedEpisode)
+            } else {
+                bookmarkButton.setIconResource(R.drawable.ic_bookmarks_24px)
+                selectedEpisode.isSaved = true
+                addEpisode(selectedEpisode)
+            }
+        }
 
     }
 
-    private fun notifyBookMark(episode: EpisodeModel) {
+    private fun notifyBookMark(selectedEpisode: EpisodeModel) {
+        val episodes = loadSavedEpisodes()
+        for (episode in episodes){
+             selectedEpisode.isSaved = episode.id == selectedEpisode.id && episode.isSaved
+             if(selectedEpisode.isSaved) break;
+        }
+
+        if (selectedEpisode.isSaved)
+            bookmarkButton.setIconResource(R.drawable.ic_bookmarks_24px)
+        else
+            bookmarkButton.setIconResource(R.drawable.ic_turned_in_not_24px)
     }
 
 
@@ -119,29 +154,29 @@ class EpisodeDetailsFragment : BaseFragment() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_episode_details, menu)
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_episode_details, menu)
+//
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
 
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> {
-//                val shareIntent = Intent(Intent.ACTION_SEND).apply {
-////                    type = "text/plain"
-////                    putExtra(Intent.EXTRA_TEXT, viewModel.episode?.link)
-////                    putExtra(Intent.EXTRA_HTML_TEXT, viewModel.episode?.excerpt?.rendered)
-//                }
-
-                //  startActivity(shareIntent)
-
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.share -> {
+////                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+//////                    type = "text/plain"
+//////                    putExtra(Intent.EXTRA_TEXT, viewModel.episode?.link)
+//////                    putExtra(Intent.EXTRA_HTML_TEXT, viewModel.episode?.excerpt?.rendered)
+////                }
+//
+//                //  startActivity(shareIntent)
+//
+//                return true
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun renderTags(episode: EpisodeModel) {
         if (episode.tags.isNullOrEmpty()) {

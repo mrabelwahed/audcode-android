@@ -32,20 +32,22 @@
                         android:layout_height="wrap_content">
 
 
-                    <TextView
-                            android:id="@+id/episodeTitleTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/first_keyline"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="@dimen/first_keyline"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Bonjour from Paris" />
+<!--                    <TextView-->
+<!--                            android:id="@+id/episodeTitleTextView"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="@dimen/first_keyline"-->
+<!--                            android:layout_marginTop="16dp"-->
+<!--                            android:layout_marginEnd="@dimen/first_keyline"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:maxLines="3"-->
+<!--                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            tools:text="Paris"-->
+<!--                            android:visibility="gone"-->
+<!--                            />-->
 
                     <ImageView
                             android:id="@+id/guestImageView"
@@ -53,9 +55,23 @@
                             android:layout_height="80dp"
                             android:layout_marginTop="16dp"
                             android:scaleType="centerCrop"
-                            app:layout_constraintStart_toStartOf="@+id/episodeTitleTextView"
-                            app:layout_constraintTop_toBottomOf="@+id/episodeTitleTextView"
+                            android:layout_marginLeft="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:src="@drawable/me" />
+
+                    <TextView
+                            android:id="@+id/authorName"
+                            style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            app:layout_constraintLeft_toRightOf="@id/guestImageView"
+                            app:layout_constraintBottom_toTopOf="@id/followButton"
+                            app:layout_constraintTop_toTopOf="@id/guestImageView"
+                            android:text="Mahmud Ramadan"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            />
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/followButton"
@@ -68,7 +84,8 @@
                             android:text="@string/follow"
                             app:cornerRadius="48dp"
                             app:layout_constraintLeft_toRightOf="@+id/guestImageView"
-                            app:layout_constraintTop_toTopOf="@+id/guestImageView" />
+                            app:layout_constraintTop_toBottomOf="@id/authorName"
+                             />
 
                     <TextView
                             android:id="@+id/dateTextView"
@@ -148,7 +165,6 @@
                             android:layout_width="48dp"
                             android:layout_height="wrap_content"
                             app:icon="@drawable/vd_link"
-                            app:layout_constraintEnd_toEndOf="@+id/episodeTitleTextView"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toEndOf="@+id/bookmarkButton"
                             app:layout_constraintTop_toTopOf="@+id/likesButton"
