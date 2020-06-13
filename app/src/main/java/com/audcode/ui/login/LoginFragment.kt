@@ -9,8 +9,10 @@ import com.audcode.AppConst.Keys.USER_EMAIL
 import com.audcode.AppConst.Keys.USER_PASSWORD
 import com.audcode.R
 import com.audcode.ui.*
+import com.audcode.ui.dto.AuthDTO
 import com.audcode.ui.dto.UserDTO
 import com.audcode.ui.login.LoginVM
+import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.profile.ProfileFragment
 import com.audcode.ui.viewstate.ServerDataState
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -44,7 +46,7 @@ class LoginFragment : BaseFragment() {
             userEmail?.let { email ->
                 userPassword?.let { pass ->
                     if (email.isNotEmpty() && pass.isNotEmpty())
-                        loginVM.authenticateUser(UserDTO(email, pass))
+                        loginVM.authenticateUser(AuthDTO(email, pass))
                 }
             }
         }
@@ -52,11 +54,12 @@ class LoginFragment : BaseFragment() {
         loginVM.userViewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ServerDataState.Success<*> -> {
-                    val authToken = it.item as String
-                    getUserModel()?.let { userModel ->
-                        userModel.authToken = authToken
-                        saveUserModel(userModel)
-                    }
+                    val userModel = it.item as UserModel
+//                    getUserModel()?.let { userModel ->
+//                        userModel.authToken = authToken
+//                        saveUserModel(userModel)
+//                    }
+                    saveUserModel(userModel)
                     handleUISuccess()
                     openProfileFragment()
                 }

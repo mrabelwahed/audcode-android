@@ -94,10 +94,7 @@ dependencies {
     kapt Libs.glideCompiler
 
 
-    //EXO Player
-//    implementation Libs.exoCore
-//    implementation Libs.exoUI
-//    implementation Libs.exoMedia
+
     implementation 'com.google.android.exoplayer:exoplayer:2.10.4'
 
     // Custom Tabs

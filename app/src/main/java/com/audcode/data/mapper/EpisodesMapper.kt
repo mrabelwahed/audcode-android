@@ -10,6 +10,7 @@ object EpisodesMapper {
             res.name,
             res.createdAt,
             res.content,
+            res.contentUrl,
             res.author,
             res.tags,
             res.url

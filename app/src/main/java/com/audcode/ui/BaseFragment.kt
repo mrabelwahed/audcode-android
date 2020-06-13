@@ -1,5 +1,6 @@
 package com.audcode.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +25,10 @@ import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.fragment_episode_details.*
 import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.lang.reflect.Type
 import javax.inject.Inject

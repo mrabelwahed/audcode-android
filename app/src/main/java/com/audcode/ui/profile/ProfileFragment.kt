@@ -40,7 +40,7 @@ class ProfileFragment : BaseFragment() {
         }
 
         getUserModel()?.let { userModel ->
-            userEmailTextView.text = userModel.email
+           userFullName.text = userModel.fullName
         }
 
 

@@ -7,9 +7,10 @@
     <string name="failure_network_connection">No Network Connection.</string>
     <string name="failure_server_error">Server Error</string>
     <string name="signup">Sign up</string>
+    <string name="full_name">Full Name</string>
     <string name="sign_in">Sign in</string>
-    <string name="password">password</string>
-    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
     <string name="welcome_back">Welcome \n back</string>
     <string name="register_account">Create \n account</string>
     <string name="listen_to_tech"> Listen To \nTech Geeks</string>
@@ -29,5 +30,6 @@
     <string name="channel_name">channelName</string>
     <string name="channel_description">ChannelDescription</string>
     <string name="sign_out">Sign Out</string>
-
+    <string name="ok">OK</string>
+    <string name="prompt_login">You need to login first to use this feature</string>
 </resources>

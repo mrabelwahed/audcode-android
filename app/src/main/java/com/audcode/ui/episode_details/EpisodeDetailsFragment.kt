@@ -10,7 +10,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.audcode.R
 import com.audcode.ui.*
+import com.audcode.ui.dialog.AlertDialogFragment
 import com.audcode.ui.home.model.EpisodeModel
+import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.splash.MainActivity.Companion.SELECTED_EPISODE
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.view_bottom_player.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val TAG_DIALOG_PROMPT_LOGIN = "prompt_login_dialog"
 class EpisodeDetailsFragment : BaseFragment() {
     override fun getLayoutById() = R.layout.fragment_episode_details
     private var isPlaying = false
@@ -65,17 +68,51 @@ class EpisodeDetailsFragment : BaseFragment() {
         observeLastPlayingEpisode()
         handleFabPlayButton()
         bookmarkButton.setOnClickListener {
-            if (selectedEpisode.isSaved) {
-                bookmarkButton.setIconResource(R.drawable.ic_turned_in_not_24px)
-                selectedEpisode.isSaved = false
-                removeEpisode(selectedEpisode)
-            } else {
-                bookmarkButton.setIconResource(R.drawable.ic_bookmarks_24px)
-                selectedEpisode.isSaved = true
-                addEpisode(selectedEpisode)
+            if(isAuthorized()){
+                if (selectedEpisode.isSaved) {
+                    bookmarkButton.setIconResource(R.drawable.ic_turned_in_not_24px)
+                    selectedEpisode.isSaved = false
+                    removeEpisode(selectedEpisode)
+                } else {
+                    bookmarkButton.setIconResource(R.drawable.ic_bookmarks_24px)
+                    selectedEpisode.isSaved = true
+                    addEpisode(selectedEpisode)
+                }
+            }else{
+                AlertDialogFragment.show(
+                    requireFragmentManager(),
+                    message = getString(R.string.prompt_login),
+                    positiveButton = getString(R.string.ok),
+                    tag = TAG_DIALOG_PROMPT_LOGIN)
+            }
+
+        }
+        relatedLinksButton.setOnClickListener {
+            if (isAuthorized()){
+                val bundle = Bundle()
+                bundle.putParcelable(SELECTED_EPISODE, selectedEpisode)
+                val browser = BrowserFragment()
+                browser.arguments = bundle
+                (activity as MainActivity).supportFragmentManager.beginTransaction().replace(
+                    R.id.container,
+                    browser
+                ).addToBackStack("browser_transaction").commit()
+            }else{
+                AlertDialogFragment.show(
+                    requireFragmentManager(),
+                    message = getString(R.string.prompt_login),
+                    positiveButton = getString(R.string.ok),
+                    tag = TAG_DIALOG_PROMPT_LOGIN)
             }
         }
+    }
 
+    private fun isAuthorized(): Boolean {
+        getUserModel()?.let { userModel ->
+            if (!userModel.authToken.isNullOrEmpty())
+                return true
+        }
+        return false
     }
 
     private fun notifyBookMark(selectedEpisode: EpisodeModel) {
@@ -200,7 +237,7 @@ class EpisodeDetailsFragment : BaseFragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun renderContent(episode: EpisodeModel) {
+    fun renderContent(episode: EpisodeModel) {
         episode.content?.let { html ->
             contentWebView.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
@@ -230,6 +267,8 @@ class EpisodeDetailsFragment : BaseFragment() {
         R.string.view_episode_link_failed,
         Snackbar.LENGTH_SHORT
     ).show()
+
+
 
 
 }

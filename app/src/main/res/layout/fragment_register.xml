@@ -20,6 +20,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fullNameInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerText"
+            android:layout_marginTop="20dp"
+            android:hint="@string/full_name">
+
+    <EditText
+            android:id="@+id/fullNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"
             android:layout_width="match_parent"
@@ -27,7 +48,7 @@
             android:layout_margin="32dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registerText"
+            app:layout_constraintTop_toBottomOf="@id/fullNameInputLayout"
             android:layout_marginTop="20dp"
             android:hint="@string/email">
 

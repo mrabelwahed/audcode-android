@@ -9,10 +9,12 @@ data class EpisodeModel(
     val name: String,
     val createdAt: String,
     val content: String?,
+    val contentUrl: String?,
     val author: String,
     val tags: ArrayList<String>,
     var isPlaying: Boolean = false,
     var isSaved:Boolean = false,
     var url: String = ""
+
 ) : Parcelable
 

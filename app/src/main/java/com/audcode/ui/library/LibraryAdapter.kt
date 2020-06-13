@@ -32,7 +32,7 @@ class LibraryAdapter @Inject constructor() :
 
             holder.author.text = episodes[position].author
             holder.title.text = episodes[position].name
-            Glide.with(holder.itemView.context).load(R.drawable.me).into(holder.image)
+            Glide.with(holder.itemView.context).load(R.drawable.logo).into(holder.image)
             holder.itemView.setOnClickListener {
                 listener.onClick(position, it)
             }

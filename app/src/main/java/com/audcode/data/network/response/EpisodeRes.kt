@@ -24,6 +24,8 @@ data class EpisodeItem(
     val tags: ArrayList<String>,
     @SerializedName("content")
     val content: String,
+    @SerializedName("contentUrl")
+    val contentUrl: String,
     @SerializedName("url")
     val url: String
 )

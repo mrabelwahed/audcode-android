@@ -68,7 +68,7 @@ class AudioService : Service() {
             player: Player?,
             callback: PlayerNotificationManager.BitmapCallback?
         ): Bitmap? {
-            return getBitmapFromVectorDrawable(applicationContext, R.drawable.rxjava)
+            return getBitmapFromVectorDrawable(applicationContext, R.drawable.logo)
         }
 
         override fun getCurrentSubText(player: Player?): String? {

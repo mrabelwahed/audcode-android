@@ -6,14 +6,18 @@ data class UserRes(val body: UserResponse)
 
 data class UserResponse(
     @SerializedName("id")
-    val id: String,
+    val id: String?,
+    @SerializedName("fullName")
+    val fullName: String,
     @SerializedName("email")
     val email: String
 )
 
-data class AuthRes(val body: AuthToken)
+data class AuthRes(val body: AuthObject)
 
-data class AuthToken(
+data class AuthObject(
     @SerializedName("token")
-    val token: String
+    val token: String,
+    @SerializedName("user")
+    val user : UserResponse
 )

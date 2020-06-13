@@ -3,6 +3,7 @@ package com.audcode.data.network
 import com.audcode.data.network.response.AuthRes
 import com.audcode.data.network.response.EpisodeRes
 import com.audcode.data.network.response.UserRes
+import com.audcode.ui.dto.AuthDTO
 import com.audcode.ui.dto.UserDTO
 import io.reactivex.Flowable
 import retrofit2.http.Body
@@ -23,5 +24,5 @@ interface AudcodeAPI {
     fun createUser(@Body userDTO: UserDTO): Flowable<UserRes>
 
     @POST("/api/v1/user/login")
-    fun authenticateUser(@Body userDTO: UserDTO): Flowable<AuthRes>
+    fun authenticateUser(@Body authDTO: AuthDTO): Flowable<AuthRes>
 }

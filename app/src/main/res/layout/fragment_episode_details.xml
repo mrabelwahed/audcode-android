@@ -31,25 +31,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-
-<!--                    <TextView-->
-<!--                            android:id="@+id/episodeTitleTextView"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/first_keyline"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_marginEnd="@dimen/first_keyline"-->
-<!--                            android:ellipsize="end"-->
-<!--                            android:maxLines="3"-->
-<!--                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            tools:text="Paris"-->
-<!--                            android:visibility="gone"-->
-<!--                            />-->
-
-                    <ImageView
+                     <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/guestImageView"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
@@ -66,26 +48,40 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             app:layout_constraintLeft_toRightOf="@id/guestImageView"
-                            app:layout_constraintBottom_toTopOf="@id/followButton"
                             app:layout_constraintTop_toTopOf="@id/guestImageView"
-                            android:text="Mahmud Ramadan"
+                            android:text="Mahmoud Ramadan"
                             android:layout_marginStart="16dp"
                             android:layout_marginLeft="16dp"
                             />
 
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/followButton"
-                            style="@style/Widget.MaterialComponents.Button.Icon"
+
+                    <TextView
+                            android:id="@+id/authorJob"
+                            style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="@id/guestImageView"
+                            app:layout_constraintLeft_toRightOf="@id/guestImageView"
+                            android:layout_marginTop="20dp"
+                            android:text="Mobile Developer"
+                            android:textColor="@color/colorAccent"
                             android:layout_marginStart="16dp"
-                            android:text="@string/follow"
-                            app:cornerRadius="48dp"
-                            app:layout_constraintLeft_toRightOf="@+id/guestImageView"
-                            app:layout_constraintTop_toBottomOf="@id/authorName"
-                             />
+                            android:layout_marginLeft="16dp"
+                            />
+
+<!--                    <com.google.android.material.button.MaterialButton-->
+<!--                            android:id="@+id/followButton"-->
+<!--                            style="@style/Widget.MaterialComponents.Button.Icon"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginEnd="16dp"-->
+<!--                            android:layout_marginRight="16dp"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:text="@string/follow"-->
+<!--                            app:cornerRadius="48dp"-->
+<!--                            app:layout_constraintLeft_toRightOf="@+id/guestImageView"-->
+<!--                            app:layout_constraintTop_toBottomOf="@id/authorName"-->
+<!--                             />-->
 
                     <TextView
                             android:id="@+id/dateTextView"
@@ -95,10 +91,10 @@
                             android:layout_marginEnd="16dp"
                             app:layout_constraintBottom_toBottomOf="@+id/guestImageView"
                             app:layout_constraintEnd_toStartOf="@+id/playButton"
-
+                            android:visibility="gone"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toEndOf="@+id/guestImageView"
-                            app:layout_constraintTop_toBottomOf="@id/followButton"
+                            app:layout_constraintTop_toBottomOf="@id/authorJob"
                             tools:text="2 days" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -113,61 +109,28 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/guestImageView" />
 
-
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/likesButton"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/first_keyline"
-                            android:layout_marginLeft="@dimen/first_keyline"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="@dimen/first_keyline"
-                            android:ellipsize="end"
-                            android:maxWidth="64dp"
-                            android:maxLines="1"
-                            app:icon="@drawable/vd_thumb_up_outline"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tagsHorizontalScrollView"
-                            tools:text="1" />
-
-                    <Button
-                            android:id="@+id/commentsButton"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:ellipsize="end"
-                            android:maxWidth="64dp"
-                            android:maxLines="1"
-                            android:visibility="gone"
-                            app:icon="@drawable/vd_chat_bubble_outline"
-                            app:layout_constraintStart_toEndOf="@+id/likesButton"
-                            app:layout_constraintTop_toTopOf="@+id/likesButton"
-                            tools:text="6" />
-
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/bookmarkButton"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
+                            app:layout_goneMarginLeft="20dp"
+                            android:layout_marginTop="20dp"
                             app:icon="@drawable/vd_bookmark_border"
-                            app:layout_constraintStart_toEndOf="@+id/commentsButton"
-                            app:layout_constraintTop_toTopOf="@+id/likesButton" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tagsHorizontalScrollView"/>
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/relatedLinksButton"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                             android:layout_width="48dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
                             app:icon="@drawable/vd_link"
-                            app:layout_constraintHorizontal_bias="1.0"
+                            android:layout_marginLeft="30dp"
                             app:layout_constraintStart_toEndOf="@+id/bookmarkButton"
-                            app:layout_constraintTop_toTopOf="@+id/likesButton"
+                            app:layout_constraintTop_toTopOf="@+id/bookmarkButton"
                             app:strokeWidth="0dp" />
 
 

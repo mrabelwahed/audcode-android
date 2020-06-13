@@ -5,11 +5,17 @@
         android:gravity="center"
         android:orientation="vertical">
 
+    <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
     <TextView
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:layout_marginTop="20dp"
             android:text="Audcode \n the voice of tech geeks" />
 
 </LinearLayout>

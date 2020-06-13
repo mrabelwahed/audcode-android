@@ -28,8 +28,9 @@ class RegisterFragment : BaseFragment() {
     override fun getLayoutById() = R.layout.fragment_register
 
     private lateinit var registerVM: RegisterVM
-    private lateinit var email: String;
-    private lateinit var password: String;
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var fullName:String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,8 +48,9 @@ class RegisterFragment : BaseFragment() {
         createAccountFab.setOnClickListener {
             email = emailInput.text.toString()
             password = passwordInput.text.toString()
+            fullName = fullNameInput.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty())
-                registerVM.createUser(UserDTO(email, password))
+                registerVM.createUser(UserDTO(fullName,email,password))
         }
 
         registerVM.userViewState.observe(viewLifecycleOwner, Observer {
