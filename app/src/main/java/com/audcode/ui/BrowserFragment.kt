@@ -13,6 +13,7 @@ import com.audcode.R
 import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity
 import kotlinx.android.synthetic.main.fragment_browse.*
+import kotlinx.android.synthetic.main.view_bottom_player.*
 
 
 class BrowserFragment : BaseFragment() {
@@ -64,5 +65,10 @@ class BrowserFragment : BaseFragment() {
         }
 
         internalBrowser.loadUrl(selectedEpisode.contentUrl)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bottomPlayer.visibility = View.GONE
     }
 }
