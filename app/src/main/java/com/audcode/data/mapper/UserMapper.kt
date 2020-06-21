@@ -11,7 +11,7 @@ object UserMapper {
         return User(res.id, res.fullName, res.email)
     }
 
-    fun transform(res: AuthObject): User {
-        return User(res.user.id, res.user.fullName, res.user.email,res.token)
+    fun transform(authObject: AuthObject): User {
+        return User(authObject.user.id, authObject.user.fullName, authObject.user.email,authObject.token)
     }
 }

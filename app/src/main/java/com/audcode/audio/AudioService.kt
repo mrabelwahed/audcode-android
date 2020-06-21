@@ -23,12 +23,14 @@ import com.audcode.ui.home.model.EpisodeModel
 import com.audcode.ui.splash.MainActivity
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.ui.PlayerNotificationManager.MediaDescriptionAdapter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 
 
@@ -90,6 +92,7 @@ class AudioService : Service() {
     private fun startPlayer() {
         val context: Context = this
         val uri: Uri = Uri.parse(episodeModel.url)
+
         player = ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
         val dataSourceFactory = DefaultDataSourceFactory(
             context,
@@ -115,12 +118,7 @@ class AudioService : Service() {
 
             override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
                 //when cancel notification like close it from status bar when episode does not play
-                episodeModel?.let {
-                    episodeModel.isPlaying = false
-                    _playerStatusLiveData.value = PlayerState.Ended(it)
-                }
-                releasePlayer()
-                stopSelf()
+                onNotificationRemove()
             }
 
             override fun onNotificationPosted(
@@ -151,7 +149,6 @@ class AudioService : Service() {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_READY -> {
-                        // player?.playWhenReady?.let { isPlaying ->
                         if (playWhenReady) {
                             episodeModel?.let {
                                 it.isPlaying = true
@@ -167,9 +164,9 @@ class AudioService : Service() {
                     }
                     Player.STATE_ENDED -> {
                         episodeModel?.let { _playerStatusLiveData.value = PlayerState.Ended(it) }
+                        onNotificationRemove()
                     }
                     else -> {
-
                         episodeModel?.let { _playerStatusLiveData.value = PlayerState.Other(it) }
                     }
                 }
@@ -284,23 +281,14 @@ class AudioService : Service() {
         }
     }
 
-//
-//      inner class  PlayerEventListener : Player.EventListener{
-//
-//        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-//            if (playbackState == Player.STATE_READY){
-//                if (playWhenReady)
-//                    Log.e("ready","playing")
-//                else
-//                    Log.e("ready","pausing")
-//            }else if (playbackState == Player.STATE_ENDED){
-//                Log.e("end","Ended")
-//            }
-//        }
-//
-//        override fun onPlayerError(error: ExoPlaybackException?) {
-//        }
-//    }
+    private fun onNotificationRemove(){
+        episodeModel?.let {
+            episodeModel.isPlaying = false
+            _playerStatusLiveData.value = PlayerState.Ended(it)
+        }
+        releasePlayer()
+        stopSelf()
+    }
 
 
 }

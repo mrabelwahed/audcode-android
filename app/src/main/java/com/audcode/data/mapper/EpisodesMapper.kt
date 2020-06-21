@@ -1,10 +1,15 @@
 package com.audcode.data.mapper
 
+import android.util.Log
 import com.audcode.data.network.response.EpisodeItem
 import com.audcode.domain.model.Episode
 
 object EpisodesMapper {
     private fun transform(res: EpisodeItem): Episode {
+        var editableUrl: String =  res.url
+        if(!res.url.contains("https"))
+            editableUrl = "https://"+res.url
+
         return Episode(
             res.id,
             res.name,
@@ -13,7 +18,7 @@ object EpisodesMapper {
             res.contentUrl,
             res.author,
             res.tags,
-            res.url
+            editableUrl
         )
     }
 

@@ -75,7 +75,7 @@ class RegisterFragment : BaseFragment() {
 
 
     private fun handleUISuccess() {
-        Toast.makeText(activity, "done", Toast.LENGTH_LONG).show()
+        Snackbar.make(rootView,getString(R.string.account_created),Snackbar.LENGTH_SHORT).show()
     }
 
     private fun openProfileFragment(userModel: UserModel, email: String, password: String) {

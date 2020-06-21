@@ -6,6 +6,7 @@ import com.audcode.ui.home.model.EpisodeModel
 object EpisodeModelMapper {
     private fun transform(episode: Episode): EpisodeModel {
 
+        
         return EpisodeModel(
             episode.id,
             episode.name,

@@ -46,6 +46,7 @@ class LibraryFragment : BaseFragment() , OnClickListener {
                 addItemDecoration(SpacesItemDecoration(resources.getDimensionPixelOffset(R.dimen.spacing_small)))
                 adapter = libraryAdapter
                 if(episodes.isNotEmpty()){
+                    libraryAdapter.clearAll()
                     libraryAdapter.addEpisodes(episodes)
                     visibility = View.VISIBLE
                     emptyText.visibility = View.GONE
@@ -60,8 +61,9 @@ class LibraryFragment : BaseFragment() , OnClickListener {
         episodeDetailsFragment.arguments = bundle
         (activity as MainActivity).supportFragmentManager.beginTransaction().replace(
             R.id.container,
-            episodeDetailsFragment
-        ).addToBackStack("episode_details_transaction").commit()
+            episodeDetailsFragment,
+            "lib"
+        ).addToBackStack("library_details_transaction").commit()
     }
 
 

@@ -102,8 +102,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="16dp"
-                            app:cornerRadius="48dp"
-                            app:fabSize="mini"
                             android:src="@drawable/vd_play_arrow"
                             app:layout_constraintBottom_toBottomOf="@+id/guestImageView"
                             app:layout_constraintRight_toRightOf="parent"
@@ -151,7 +149,7 @@
                         <com.google.android.material.chip.ChipGroup
                                 android:id="@+id/tagsChipGroup"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="48dp"
                                 app:singleLine="true" />
                     </HorizontalScrollView>
 
@@ -180,7 +178,7 @@
                     app:contentPadding="0dp"
                     tools:visibility="visible">
 
-                <com.koalatea.sedaily.ui.widget.HackyWebView
+                <com.audcode.ui.widget.HackyWebView
                         android:id="@+id/contentWebView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

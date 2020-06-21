@@ -7,7 +7,7 @@ object Versions {
     val COMPILE_SDK = 28
     val MIN_SDK_VERSION = 16
     val TARGET_SDK_VERSION = 28
-    val VERSION_CODE = 3
+    val VERSION_CODE = 8
     val VERSION_NAME = "1.0"
     val RXJAVA_VERSION = "2.2.13"
     val RX_ANDROID = "2.1.1"

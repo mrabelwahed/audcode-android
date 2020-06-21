@@ -127,6 +127,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentByTag("lib")
+        if (fragment!=null)
+        {
+            super.onBackPressed()
+            return
+        }
         val selectedItem = bottomNavigationView.selectedItemId
         if (R.id.action_home != selectedItem) {
             bottomNavigationView.selectedItemId = R.id.action_home

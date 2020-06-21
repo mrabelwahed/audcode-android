@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loginView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -35,7 +36,7 @@
         <EditText
                 android:id="@+id/emailInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:maxLines="1"
                 android:inputType="textEmailAddress" />
 
@@ -55,7 +56,7 @@
         <EditText
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:maxLines="1"
                 android:inputType="textPassword" />
 
@@ -93,7 +94,7 @@
             android:id="@+id/signupText"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="32dp"
             android:text="@string/signup"
             android:textSize="20sp"

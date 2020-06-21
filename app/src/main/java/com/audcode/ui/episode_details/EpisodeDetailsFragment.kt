@@ -78,6 +78,7 @@ class EpisodeDetailsFragment : BaseFragment() {
                     selectedEpisode.isSaved = true
                     addEpisode(selectedEpisode)
                 }
+                saveEpisodes(loadSavedEpisodes())
             }else{
                 AlertDialogFragment.show(
                     requireFragmentManager(),

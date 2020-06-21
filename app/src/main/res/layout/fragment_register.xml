@@ -35,7 +35,7 @@
     <EditText
             android:id="@+id/fullNameInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:maxLines="1"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,7 +55,7 @@
         <EditText
                 android:id="@+id/emailInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:maxLines="1"
                 android:inputType="textEmailAddress" />
 
@@ -76,7 +76,7 @@
         <EditText
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:maxLines="1"
                 android:inputType="textPassword" />
 
@@ -114,7 +114,7 @@
             android:id="@+id/signInText"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="32dp"
             android:text="@string/sign_in"
             android:textSize="20sp"

@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.audcode.AppConst.Keys.USER_EMAIL
 import com.audcode.AppConst.Keys.USER_PASSWORD
 import com.audcode.R
+import com.audcode.data.exceptions.Failure
 import com.audcode.ui.*
 import com.audcode.ui.dto.AuthDTO
-import com.audcode.ui.dto.UserDTO
 import com.audcode.ui.login.LoginVM
 import com.audcode.ui.login.model.UserModel
 import com.audcode.ui.profile.ProfileFragment
 import com.audcode.ui.viewstate.ServerDataState
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment() {
@@ -55,35 +56,45 @@ class LoginFragment : BaseFragment() {
             when (it) {
                 is ServerDataState.Success<*> -> {
                     val userModel = it.item as UserModel
-//                    getUserModel()?.let { userModel ->
-//                        userModel.authToken = authToken
-//                        saveUserModel(userModel)
-//                    }
                     saveUserModel(userModel)
                     handleUISuccess()
                     openProfileFragment()
                 }
 
                 is ServerDataState.Error -> {
-//                    handleUIError()
-//                    setError(it.failure)
+                    handleUIError(it.failure)
                 }
 
                 is ServerDataState.Loading -> {
 //                    handleUILoading()
                 }
             }
-            //save token and set user as authorized
-//            getUserModel()?.let {
-//                user ->
-//                user?.authToken = token
-//            }
+
         })
 
         signupText.setOnClickListener {
             holderActivity.loadFragment(RegisterFragment())
         }
 
+    }
+
+
+    private fun handleUIError(failure: Failure?) {
+        var message = ""
+        failure?.let {
+            message = when (it) {
+                is Failure.NetworkConnection ->
+                    getString(R.string.failure_network_connection)
+
+                is Failure.ServerError ->
+                    it.message
+
+                is Failure.UnExpectedError ->
+                    getString(R.string.failure_unexpected_error)
+            }
+        }
+
+        Snackbar.make(loginView, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun openProfileFragment() {

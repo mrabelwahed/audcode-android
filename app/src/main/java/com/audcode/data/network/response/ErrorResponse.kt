@@ -1,3 +1,5 @@
 package com.audcode.data.network.response
 
-data class ErrorResponse (val code :Int, val message:String)
+import com.google.gson.annotations.SerializedName
+
+data class ErrorResponse (@SerializedName("status")val status :Int,@SerializedName("message") val message:String)

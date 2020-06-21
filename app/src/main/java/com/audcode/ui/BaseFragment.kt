@@ -22,7 +22,9 @@ import com.audcode.ui.episode_details.EpisodeDetailsFragment
 import com.audcode.ui.home.HomeFragment
 import com.audcode.ui.home.HomeVM
 import com.audcode.ui.home.model.EpisodeModel
+import com.audcode.ui.library.LibraryFragment
 import com.audcode.ui.login.model.UserModel
+import com.audcode.ui.profile.ProfileFragment
 import com.audcode.ui.splash.MainActivity
 import com.audcode.ui.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -68,59 +70,46 @@ abstract class BaseFragment : Fragment() {
             androidx.lifecycle.Observer { playerStatus ->
 
                 if (this is EpisodeDetailsFragment) {
-                    if (playerStatus is PlayerState.Playing) {
-                        setLastPlayedEpisode(playerStatus.episode)
-                        handleNotificationAction(playerStatus.episode)
-                        handleBottomPlayerFromNotification(playerStatus.episode)
-                    } else if (playerStatus is PlayerState.Paused) {
-                        setLastPlayedEpisode(playerStatus.episode)
-                        handleNotificationAction(playerStatus.episode)
-                        handleBottomPlayerFromNotification(playerStatus.episode)
+                    when (playerStatus) {
+                        is PlayerState.Playing -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleNotificationAction(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                        }
+                        is PlayerState.Paused -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleNotificationAction(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                        }
+                        is PlayerState.Ended -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                            handleNotificationAction(playerStatus.episode)
+                        }
                     }
-                } else if (this is HomeFragment) {
-                    if (playerStatus is PlayerState.Playing) {
-                        setLastPlayedEpisode(playerStatus.episode)
-                        handleBottomPlayerFromNotification(playerStatus.episode)
-
-                    } else if (playerStatus is PlayerState.Paused) {
-                        setLastPlayedEpisode(playerStatus.episode)
-                        handleBottomPlayerFromNotification(playerStatus.episode)
+                } else if (this is HomeFragment || this is ProfileFragment || this is LibraryFragment) {
+                    when (playerStatus) {
+                        is PlayerState.Playing -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                        }
+                        is PlayerState.Paused -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                        }
+                        is PlayerState.Ended -> {
+                            setLastPlayedEpisode(playerStatus.episode)
+                            handleBottomPlayerFromNotification(playerStatus.episode)
+                        }
                     }
                 }
 
-                Log.e("status", playerStatus.toString())
+               // Log.e("status", playerStatus.toString())
             })
 
-        holderActivity.bottomSaveButton.setOnClickListener {
-            handleSavedClickButton()
-        }
-        handleSavedEpisodeInBottomPlayer()
+
     }
 
-    fun handleSavedEpisodeInBottomPlayer() {
-        getLastPlayedEpisode()?.let { episode ->
-            if (episode.isSaved)
-                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
-            else
-                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
-        }
-    }
-
-
-    fun handleSavedClickButton() {
-        getLastPlayedEpisode()?.let {
-            if (it.isSaved) {
-                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_turned_in_not_24px)
-                it.isSaved = false
-                removeEpisode(it)
-            } else {
-                it.isSaved = true
-                holderActivity.bottomSaveButton.setImageResource(R.drawable.ic_bookmarks_24px)
-                addEpisode(it)
-            }
-            setLastPlayedEpisode(it)
-        }
-    }
 
 
     private fun handleBottomPlayerFromNotification(episode: EpisodeModel) {

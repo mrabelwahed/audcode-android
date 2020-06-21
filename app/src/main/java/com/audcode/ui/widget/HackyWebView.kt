@@ -1,4 +1,4 @@
-package com.koalatea.sedaily.ui.widget
+package com.audcode.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet

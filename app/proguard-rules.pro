@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#-dontobfuscate
+#-dontshrink
+#-keepclassmembernames class com.audcode.ui.dto.AuthDTO$** { *; }
+#-keepclassmembernames  class com.audcode.ui.dto.UserDTO$** { *; }
+-keepclassmembers,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
