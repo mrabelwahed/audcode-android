@@ -286,6 +286,7 @@ class AudioService : Service() {
             episodeModel.isPlaying = false
             _playerStatusLiveData.value = PlayerState.Ended(it)
         }
+        stopForeground(true)
         releasePlayer()
         stopSelf()
     }

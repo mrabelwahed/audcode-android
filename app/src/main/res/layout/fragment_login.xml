@@ -16,6 +16,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="60dp"
             android:text="@string/welcome_back"
+            android:textColor="@color/colorAccent"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +101,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

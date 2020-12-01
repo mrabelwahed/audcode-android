@@ -37,6 +37,7 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/episodeImage"
+               app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Ask Android Developer" />
 

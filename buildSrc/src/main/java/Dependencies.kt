@@ -3,11 +3,11 @@ import Versions.LIFE_CYCLE_VERSION
 import Versions.MOCK_HTTP_SERVER
 
 object Versions {
-    val KOTLIN = "1.3.20"
+    val KOTLIN = "1.3.72"
     val COMPILE_SDK = 28
     val MIN_SDK_VERSION = 16
     val TARGET_SDK_VERSION = 28
-    val VERSION_CODE = 8
+    val VERSION_CODE = 10
     val VERSION_NAME = "1.0"
     val RXJAVA_VERSION = "2.2.13"
     val RX_ANDROID = "2.1.1"
@@ -23,7 +23,7 @@ object Versions {
     val GLIDE_VERSION = "4.11.0"
     val RECYCLERVIEW_VERSION = "1.1.0"
     val CONSTRAINT_LAYOUT = "1.1.3"
-    val ANDROID_GRADLE_VERSION = "3.3.1"
+    val ANDROID_GRADLE_VERSION = "4.0.1"
     val ESPRESSO_VERSION = "3.1.1"
     val APP_COMPAT_VERSION = "1.1.0"
     val CORE_KTX = "1.1.0"

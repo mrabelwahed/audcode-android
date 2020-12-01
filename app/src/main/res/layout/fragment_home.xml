@@ -18,6 +18,7 @@
             android:drawableLeft="@drawable/ic_search_24px"
             android:drawablePadding="5dp"
             android:hint="@string/search_audcodes"
+            android:textColorHint="@color/colorAccent"
             android:maxLines="1"
             android:paddingLeft="10dp" />
 
