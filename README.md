@@ -1,6 +1,6 @@
 # Audcode Android APP
 
-![Audcode APP] (art/art.png)
+![AudcodeAPP](art/art.png)
 
 Note: [I do not support This project any more , it may have some bugs]
 This is Audcode APP . It is Audio Tech Content Summary for Articles.
